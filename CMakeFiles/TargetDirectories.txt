@@ -1,4 +1,0 @@
-C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/TAPLite.dir
-C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/INSTALL.dir
-C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/ALL_BUILD.dir
-C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/ZERO_CHECK.dir

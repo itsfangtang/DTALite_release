@@ -15,6 +15,12 @@ endif()
 set(CMAKE_CXX_FLAGS_RELEASE "/O2 /GL")
 set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od /RTC1")
 
+# Specify output directories for binaries and libraries
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib)  # Static libraries
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/lib)  # Shared libraries
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/bin)  # Executables
+set(CMAKE_PYTHON_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output/python) # Python bindings
+
 # Find pybind11
 find_package(pybind11 REQUIRED)
 
@@ -35,10 +41,14 @@ endif()
 set(TAPLite_SOURCES
     TAPLite/bindings.cpp
     TAPLite/core/TAPLite.cpp
+    TAPLite/core/TAPLite.h
 )
 
 # Define the Python extension module
 pybind11_add_module(TAPLite ${TAPLite_SOURCES})
+
+# Specify where the compiled Python module should go
+set_target_properties(TAPLite PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_PYTHON_OUTPUT_DIRECTORY})
 
 # Compiler flags and warning suppression
 if(MSVC)
