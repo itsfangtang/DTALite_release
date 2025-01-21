@@ -1,0 +1,329 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Windows - 10.0.26100 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.10.4+10fbfbf2e for .NET Framework
+      Build started 1/20/2025 8:26:16 PM.
+      
+      Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\3.31.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\3.31.2\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\3.31.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:00.46
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/3.31.2/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-3hob2w"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-3hob2w"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-3hob2w'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_e4f44.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.10.4+10fbfbf2e for .NET Framework
+        Build started 1/20/2025 8:26:16 PM.
+        
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-3hob2w\\cmTC_e4f44.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_e4f44.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-3hob2w\\Debug\\".
+          Creating directory "cmTC_e4f44.dir\\Debug\\cmTC_e4f44.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_e4f44.dir\\Debug\\cmTC_e4f44.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_e4f44.dir\\Debug\\cmTC_e4f44.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_e4f44.dir\\Debug\\\\" /Fd"cmTC_e4f44.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\anaconda3\\envs\\TAPLite\\Library\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.40.33811 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_e4f44.dir\\Debug\\\\" /Fd"cmTC_e4f44.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\anaconda3\\envs\\TAPLite\\Library\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-3hob2w\\Debug\\cmTC_e4f44.exe" /INCREMENTAL /ILK:"cmTC_e4f44.dir\\Debug\\cmTC_e4f44.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-3hob2w/Debug/cmTC_e4f44.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-3hob2w/Debug/cmTC_e4f44.lib" /MACHINE:X64  /machine:x64 cmTC_e4f44.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_e4f44.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-3hob2w\\Debug\\cmTC_e4f44.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_e4f44.dir\\Debug\\cmTC_e4f44.tlog\\unsuccessfulbuild".
+          Touching "cmTC_e4f44.dir\\Debug\\cmTC_e4f44.tlog\\cmTC_e4f44.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-3hob2w\\cmTC_e4f44.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.46
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.40.33807/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.40.33807/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.40.33811.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake/pybind11/pybind11Common.cmake:323 (check_cxx_compiler_flag)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake/pybind11/pybind11Common.cmake:390 (_pybind11_return_if_cxx_and_linker_flags_work)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake/pybind11/pybind11Common.cmake:435 (_pybind11_generate_lto)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake/pybind11/pybind11Config.cmake:250 (include)"
+      - "CMakeLists.txt:19 (find_package)"
+    checks:
+      - "Performing Test HAS_MSVC_GL_LTCG"
+    directories:
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-99camb"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-99camb"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: ""
+    buildResult:
+      variable: "HAS_MSVC_GL_LTCG"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-99camb'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_6d579.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.10.4+10fbfbf2e for .NET Framework
+        Build started 1/20/2025 8:26:17 PM.
+        
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\cmTC_6d579.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_6d579.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\Debug\\".
+          Creating directory "cmTC_6d579.dir\\Debug\\cmTC_6d579.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_6d579.dir\\Debug\\cmTC_6d579.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_6d579.dir\\Debug\\cmTC_6d579.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /GL /D _MBCS /D WIN32 /D _WINDOWS /D HAS_MSVC_GL_LTCG /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_6d579.dir\\Debug\\\\" /Fd"cmTC_6d579.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\src.cxx"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.40.33811 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /GL /D _MBCS /D WIN32 /D _WINDOWS /D HAS_MSVC_GL_LTCG /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_6d579.dir\\Debug\\\\" /Fd"cmTC_6d579.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\src.cxx"
+          src.cxx
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\Debug\\cmTC_6d579.exe" /INCREMENTAL /ILK:"cmTC_6d579.dir\\Debug\\cmTC_6d579.ilk" /NOLOGO "-LTCG" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-99camb/Debug/cmTC_6d579.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-99camb/Debug/cmTC_6d579.lib" /MACHINE:X64  /machine:x64 cmTC_6d579.dir\\Debug\\src.obj
+        LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification [C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\cmTC_6d579.vcxproj]
+          Generating code
+          Finished generating code
+          cmTC_6d579.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\Debug\\cmTC_6d579.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_6d579.dir\\Debug\\cmTC_6d579.tlog\\unsuccessfulbuild".
+          Touching "cmTC_6d579.dir\\Debug\\cmTC_6d579.tlog\\cmTC_6d579.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\cmTC_6d579.vcxproj" (default targets).
+        
+        Build succeeded.
+        
+        "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\cmTC_6d579.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification [C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-99camb\\cmTC_6d579.vcxproj]
+        
+            1 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.56
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:24 (find_package)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-p4570r"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-p4570r"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: ""
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_openmp"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-p4570r'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_cbfd2.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.10.4+10fbfbf2e for .NET Framework
+        Build started 1/20/2025 8:26:18 PM.
+        
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\cmTC_cbfd2.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_cbfd2.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\Debug\\".
+          Creating directory "cmTC_cbfd2.dir\\Debug\\cmTC_cbfd2.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_cbfd2.dir\\Debug\\cmTC_cbfd2.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_cbfd2.dir\\Debug\\cmTC_cbfd2.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_cbfd2.dir\\Debug\\\\" /Fd"cmTC_cbfd2.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\OpenMPTryFlag.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.40.33811 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_cbfd2.dir\\Debug\\\\" /Fd"cmTC_cbfd2.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\OpenMPTryFlag.cpp"
+          OpenMPTryFlag.cpp
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\Debug\\cmTC_cbfd2.exe" /INCREMENTAL /ILK:"cmTC_cbfd2.dir\\Debug\\cmTC_cbfd2.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-p4570r/Debug/cmTC_cbfd2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-p4570r/Debug/cmTC_cbfd2.lib" /MACHINE:X64  /machine:x64 cmTC_cbfd2.dir\\Debug\\OpenMPTryFlag.obj
+          cmTC_cbfd2.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\Debug\\cmTC_cbfd2.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_cbfd2.dir\\Debug\\cmTC_cbfd2.tlog\\unsuccessfulbuild".
+          Touching "cmTC_cbfd2.dir\\Debug\\cmTC_cbfd2.tlog\\cmTC_cbfd2.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-p4570r\\cmTC_cbfd2.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.48
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/FindOpenMP.cmake:456 (try_compile)"
+      - "C:/Users/Zheng/anaconda3/envs/TAPLite/Library/share/cmake-3.31/Modules/FindOpenMP.cmake:596 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:24 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-g4gapq"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-g4gapq"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: ""
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-g4gapq'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_905cd.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.10.4+10fbfbf2e for .NET Framework
+        Build started 1/20/2025 8:26:18 PM.
+        
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\cmTC_905cd.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_905cd.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\Debug\\".
+          Creating directory "cmTC_905cd.dir\\Debug\\cmTC_905cd.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_905cd.dir\\Debug\\cmTC_905cd.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_905cd.dir\\Debug\\cmTC_905cd.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_905cd.dir\\Debug\\\\" /Fd"cmTC_905cd.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\OpenMPCheckVersion.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.40.33811 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_905cd.dir\\Debug\\\\" /Fd"cmTC_905cd.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\OpenMPCheckVersion.cpp"
+          OpenMPCheckVersion.cpp
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\Debug\\cmTC_905cd.exe" /INCREMENTAL /ILK:"cmTC_905cd.dir\\Debug\\cmTC_905cd.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-g4gapq/Debug/cmTC_905cd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/CMakeFiles/CMakeScratch/TryCompile-g4gapq/Debug/cmTC_905cd.lib" /MACHINE:X64  /machine:x64 cmTC_905cd.dir\\Debug\\OpenMPCheckVersion.obj
+          cmTC_905cd.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\Debug\\cmTC_905cd.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_905cd.dir\\Debug\\cmTC_905cd.tlog\\unsuccessfulbuild".
+          Touching "cmTC_905cd.dir\\Debug\\cmTC_905cd.tlog\\cmTC_905cd.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\CMakeFiles\\CMakeScratch\\TryCompile-g4gapq\\cmTC_905cd.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.52
+        
+      exitCode: 0
+...

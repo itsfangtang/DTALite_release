@@ -1,0 +1,10 @@
+^C:\USERS\ZHENG\PYCHARMPROJECTS\TAPLITE\CMAKEFILES\7513ED4B3C5450C9A5699AAD9348D0F1\GENERATE.STAMP.RULE
+setlocal
+C:\Users\Zheng\anaconda3\envs\TAPLite\Library\bin\cmake.exe -SC:/Users/Zheng/PycharmProjects/TAPLite -BC:/Users/Zheng/PycharmProjects/TAPLite --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Zheng/PycharmProjects/TAPLite/TAPLite.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
