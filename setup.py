@@ -1,5 +1,7 @@
 from skbuild import setup
 from setuptools import find_packages
+import os
+import sys
 
 setup(
     name="TAPLite",
@@ -7,17 +9,17 @@ setup(
     description="A Python binding for TAPLite, a traffic assignment problem solver",
     long_description=open("README.md").read() if os.path.exists("README.md") else "",
     long_description_content_type="text/markdown",
-    author="Han Zheng",
+    author="Xuesong Zhou, Han Zheng",
     author_email="your_email@example.com",  # Replace with your email
     url="https://github.com/your_username/TAPLite",  # Replace with your repo URL
-    license="MIT",  # Adjust as per your license
+    license="MIT",
     packages=find_packages(),
-    cmake_install_dir="TAPLite",  # Installation directory for compiled artifacts
+    cmake_install_dir="TAPLite",
     cmake_args=[
         "-DCMAKE_BUILD_TYPE=Release",
         "-DPYTHON_EXECUTABLE:FILEPATH={}".format(sys.executable)
     ],
-    python_requires=">=3.7",  # Adjust based on the Python version you want to support
+    python_requires=">=3.7",
     install_requires=[
         "pybind11>=2.6.0",
         "scikit-build",

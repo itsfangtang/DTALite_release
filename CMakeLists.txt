@@ -40,17 +40,17 @@ set(TAPLite_SOURCES
 # Define the Python extension module
 pybind11_add_module(TAPLite ${TAPLite_SOURCES})
 
+# Compiler flags and warning suppression
+if(MSVC)
+    target_compile_options(TAPLite PRIVATE /W3 /bigobj /wd4477 /wd4267 /wd4244 /wd4996 /wd4101)
+else()
+    target_compile_options(TAPLite PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
 # OpenMP support
 if(USE_OPENMP AND OPENMP_FOUND)
     target_compile_options(TAPLite PRIVATE ${OPENMP_FLAGS})
     target_link_libraries(TAPLite PRIVATE ${OPENMP_LIBRARIES})
-endif()
-
-# Ensure platform-specific settings
-if(MSVC)
-    target_compile_options(TAPLite PRIVATE /W3 /bigobj)
-else()
-    target_compile_options(TAPLite PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 # Installation

@@ -724,9 +724,6 @@ void OutputRouteDetails(const std::string& filename)
 		return; 
 	// Write the CSV header in lowercase
 	outputFile << "mode,route_id,o_zone_id,d_zone_id,unique_route_id,node_ids,link_ids,total_distance_mile,total_distance_km,total_free_flow_travel_time,total_travel_time,route_key,volume,\n";
-
-
-
 	for (int m = 1; m < linkIndices.size(); ++m)
 	{
 		for (int Orig = 1; Orig < linkIndices[m].size(); ++Orig)
@@ -1552,10 +1549,14 @@ int main(int argc, char** argv)
 
 		}
 
-		fprintf(link_performance_file, "%d,%d,%d,%d,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,",
-			iteration_no, Link[k].link_id, Link[k].external_from_node_id, Link[k].external_to_node_id,
-			MainVolume[k], Link[k].Ref_volume, Link[k].Base_volume, Link[k].Obs_volume, Link[k].Link_Capacity, IncomingDemand, DOC, Link[k].FreeTravelTime,
-			Link[k].Travel_time, Link[k].VDF_Alpha, Link[k].VDF_Beta, Link[k].VDF_plf, Link[k].length / fmax(Link[k].Travel_time / 60.0, 0.001), Link[k].length / fmax(Link[k].Travel_time / 60.0, 0.001)*1.609, Link[k].Travel_time - Link[k].FreeTravelTime);
+        fprintf(link_performance_file,
+            "%d,%d,%d,%d,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf\n",
+            iteration_no, Link[k].link_id, Link[k].external_from_node_id, Link[k].external_to_node_id,
+            MainVolume[k], Link[k].Ref_volume, Link[k].Base_volume, Link[k].Obs_volume, Link[k].Link_Capacity, IncomingDemand, DOC, Link[k].FreeTravelTime,
+            Link[k].Travel_time, Link[k].VDF_Alpha, Link[k].VDF_Beta, Link[k].VDF_plf,
+            Link[k].length / fmax(Link[k].Travel_time / 60.0, 0.001),
+            Link[k].length / fmax(Link[k].Travel_time / 60.0, 0.001) * 1.609,
+            Link[k].Travel_time - Link[k].FreeTravelTime);
 
 		fprintf(link_performance_file, "%2lf,%2lf,%2lf,%2lf,%2lf,%2lf,", VMT, VHT, PMT, PHT, VHT_QVDF, PHT_QVDF);
 

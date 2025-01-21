@@ -1,0 +1,4 @@
+mode_type,name,vot,pce,occ,demand_file,dedicated_shortest_path,
+sov,DRIVE, 10, 1, 1,demand_1400_1800_sov.csv, 1
+hov,HOV, 10, 1, 2,demand_1400_1800_hov.csv, 1
+trk,truck, 10, 2, 1,demand_1400_1800_trk.csv, 0
