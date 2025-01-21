@@ -18,7 +18,7 @@ from .TAPLite import (
 
 # Metadata for the package
 __version__ = "0.1.0"  # Define the version of your package
-__author__ = "Xuesong Zhou, Han Zheng"  # Replace with your name
+__author__ = "Dr. Xuesong (Simon) Zhou, Dr. Han Zheng"  # Replace with your name
 __license__ = "MIT"  # Or the license you're using
 
 # Example: Exported functions for quick access

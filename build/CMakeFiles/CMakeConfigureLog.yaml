@@ -24,7 +24,7 @@ events:
       The output was:
       0
       MSBuild version 17.12.12+1cce77968 for .NET Framework
-      Build started 1/21/2025 2:22:44 PM.
+      Build started 1/21/2025 3:24:07 PM.
       
       Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\3.31.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -53,7 +53,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:01.43
+      Time Elapsed 00:00:01.34
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -72,8 +72,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-wjpaal"
-      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-wjpaal"
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-v7gmmd"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-v7gmmd"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -83,40 +83,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-wjpaal'
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-v7gmmd'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3839d.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_6d1b6.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.12.12+1cce77968 for .NET Framework
-        Build started 1/21/2025 2:22:46 PM.
+        Build started 1/21/2025 3:24:09 PM.
         
-        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wjpaal\\cmTC_3839d.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v7gmmd\\cmTC_6d1b6.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_3839d.dir\\Debug\\".
+          Creating directory "cmTC_6d1b6.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wjpaal\\Debug\\".
-          Creating directory "cmTC_3839d.dir\\Debug\\cmTC_3839d.tlog\\".
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v7gmmd\\Debug\\".
+          Creating directory "cmTC_6d1b6.dir\\Debug\\cmTC_6d1b6.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_3839d.dir\\Debug\\cmTC_3839d.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_3839d.dir\\Debug\\cmTC_3839d.tlog\\unsuccessfulbuild".
+          Creating "cmTC_6d1b6.dir\\Debug\\cmTC_6d1b6.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_6d1b6.dir\\Debug\\cmTC_6d1b6.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_3839d.dir\\Debug\\\\" /Fd"cmTC_3839d.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\anaconda3\\envs\\TAPLite\\Library\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_6d1b6.dir\\Debug\\\\" /Fd"cmTC_6d1b6.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\anaconda3\\envs\\TAPLite\\Library\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34436 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_3839d.dir\\Debug\\\\" /Fd"cmTC_3839d.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\anaconda3\\envs\\TAPLite\\Library\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_6d1b6.dir\\Debug\\\\" /Fd"cmTC_6d1b6.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\anaconda3\\envs\\TAPLite\\Library\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wjpaal\\Debug\\cmTC_3839d.exe" /INCREMENTAL /ILK:"cmTC_3839d.dir\\Debug\\cmTC_3839d.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-wjpaal/Debug/cmTC_3839d.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-wjpaal/Debug/cmTC_3839d.lib" /MACHINE:X64  /machine:x64 cmTC_3839d.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_3839d.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wjpaal\\Debug\\cmTC_3839d.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v7gmmd\\Debug\\cmTC_6d1b6.exe" /INCREMENTAL /ILK:"cmTC_6d1b6.dir\\Debug\\cmTC_6d1b6.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-v7gmmd/Debug/cmTC_6d1b6.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-v7gmmd/Debug/cmTC_6d1b6.lib" /MACHINE:X64  /machine:x64 cmTC_6d1b6.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_6d1b6.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v7gmmd\\Debug\\cmTC_6d1b6.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_3839d.dir\\Debug\\cmTC_3839d.tlog\\unsuccessfulbuild".
-          Touching "cmTC_3839d.dir\\Debug\\cmTC_3839d.tlog\\cmTC_3839d.lastbuildstate".
-        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-wjpaal\\cmTC_3839d.vcxproj" (default targets).
+          Deleting file "cmTC_6d1b6.dir\\Debug\\cmTC_6d1b6.tlog\\unsuccessfulbuild".
+          Touching "cmTC_6d1b6.dir\\Debug\\cmTC_6d1b6.tlog\\cmTC_6d1b6.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v7gmmd\\cmTC_6d1b6.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.21
+        Time Elapsed 00:00:01.16
         
       exitCode: 0
   -
@@ -161,8 +161,8 @@ events:
     checks:
       - "Performing Test HAS_MSVC_GL_LTCG"
     directories:
-      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0t96yt"
-      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0t96yt"
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-mjf5og"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-mjf5og"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Od /RTC1"
@@ -172,48 +172,48 @@ events:
       variable: "HAS_MSVC_GL_LTCG"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0t96yt'
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-mjf5og'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_26016.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_e6b5b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.12.12+1cce77968 for .NET Framework
-        Build started 1/21/2025 2:22:48 PM.
+        Build started 1/21/2025 3:24:10 PM.
         
-        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\cmTC_26016.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\cmTC_e6b5b.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_26016.dir\\Debug\\".
+          Creating directory "cmTC_e6b5b.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\Debug\\".
-          Creating directory "cmTC_26016.dir\\Debug\\cmTC_26016.tlog\\".
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\Debug\\".
+          Creating directory "cmTC_e6b5b.dir\\Debug\\cmTC_e6b5b.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_26016.dir\\Debug\\cmTC_26016.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_26016.dir\\Debug\\cmTC_26016.tlog\\unsuccessfulbuild".
+          Creating "cmTC_e6b5b.dir\\Debug\\cmTC_e6b5b.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_e6b5b.dir\\Debug\\cmTC_e6b5b.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /GL /D _MBCS /D WIN32 /D _WINDOWS /D HAS_MSVC_GL_LTCG /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_26016.dir\\Debug\\\\" /Fd"cmTC_26016.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\src.cxx"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /GL /D _MBCS /D WIN32 /D _WINDOWS /D HAS_MSVC_GL_LTCG /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_e6b5b.dir\\Debug\\\\" /Fd"cmTC_e6b5b.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\src.cxx"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34436 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /GL /D _MBCS /D WIN32 /D _WINDOWS /D HAS_MSVC_GL_LTCG /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_26016.dir\\Debug\\\\" /Fd"cmTC_26016.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\src.cxx"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /GL /D _MBCS /D WIN32 /D _WINDOWS /D HAS_MSVC_GL_LTCG /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /std:c++17 /Fo"cmTC_e6b5b.dir\\Debug\\\\" /Fd"cmTC_e6b5b.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\src.cxx"
           src.cxx
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\Debug\\cmTC_26016.exe" /INCREMENTAL /ILK:"cmTC_26016.dir\\Debug\\cmTC_26016.ilk" /NOLOGO "-LTCG" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0t96yt/Debug/cmTC_26016.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0t96yt/Debug/cmTC_26016.lib" /MACHINE:X64  /machine:x64 cmTC_26016.dir\\Debug\\src.obj
-        LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification [C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\cmTC_26016.vcxproj]
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\Debug\\cmTC_e6b5b.exe" /INCREMENTAL /ILK:"cmTC_e6b5b.dir\\Debug\\cmTC_e6b5b.ilk" /NOLOGO "-LTCG" kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-mjf5og/Debug/cmTC_e6b5b.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-mjf5og/Debug/cmTC_e6b5b.lib" /MACHINE:X64  /machine:x64 cmTC_e6b5b.dir\\Debug\\src.obj
+        LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification [C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\cmTC_e6b5b.vcxproj]
           Generating code
           Finished generating code
-          cmTC_26016.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\Debug\\cmTC_26016.exe
+          cmTC_e6b5b.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\Debug\\cmTC_e6b5b.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_26016.dir\\Debug\\cmTC_26016.tlog\\unsuccessfulbuild".
-          Touching "cmTC_26016.dir\\Debug\\cmTC_26016.tlog\\cmTC_26016.lastbuildstate".
-        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\cmTC_26016.vcxproj" (default targets).
+          Deleting file "cmTC_e6b5b.dir\\Debug\\cmTC_e6b5b.tlog\\unsuccessfulbuild".
+          Touching "cmTC_e6b5b.dir\\Debug\\cmTC_e6b5b.tlog\\cmTC_e6b5b.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\cmTC_e6b5b.vcxproj" (default targets).
         
         Build succeeded.
         
-        "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\cmTC_26016.vcxproj" (default target) (1) ->
+        "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\cmTC_e6b5b.vcxproj" (default target) (1) ->
         (Link target) -> 
-          LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification [C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0t96yt\\cmTC_26016.vcxproj]
+          LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification [C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mjf5og\\cmTC_e6b5b.vcxproj]
         
             1 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.31
+        Time Elapsed 00:00:01.24
         
       exitCode: 0
   -
@@ -224,8 +224,8 @@ events:
       - "CMakeLists.txt:30 (find_package)"
     description: "Detecting CXX OpenMP compiler info"
     directories:
-      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-285o3x"
-      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-285o3x"
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-fg4887"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-fg4887"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Od /RTC1"
@@ -235,40 +235,40 @@ events:
       variable: "OpenMP_COMPILE_RESULT_CXX_openmp"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-285o3x'
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-fg4887'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a7153.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d50ff.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.12.12+1cce77968 for .NET Framework
-        Build started 1/21/2025 2:22:49 PM.
+        Build started 1/21/2025 3:24:12 PM.
         
-        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\cmTC_a7153.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\cmTC_d50ff.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_a7153.dir\\Debug\\".
+          Creating directory "cmTC_d50ff.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\Debug\\".
-          Creating directory "cmTC_a7153.dir\\Debug\\cmTC_a7153.tlog\\".
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\Debug\\".
+          Creating directory "cmTC_d50ff.dir\\Debug\\cmTC_d50ff.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_a7153.dir\\Debug\\cmTC_a7153.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_a7153.dir\\Debug\\cmTC_a7153.tlog\\unsuccessfulbuild".
+          Creating "cmTC_d50ff.dir\\Debug\\cmTC_d50ff.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_d50ff.dir\\Debug\\cmTC_d50ff.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_a7153.dir\\Debug\\\\" /Fd"cmTC_a7153.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\OpenMPTryFlag.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_d50ff.dir\\Debug\\\\" /Fd"cmTC_d50ff.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\OpenMPTryFlag.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34436 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_a7153.dir\\Debug\\\\" /Fd"cmTC_a7153.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\OpenMPTryFlag.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_d50ff.dir\\Debug\\\\" /Fd"cmTC_d50ff.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\OpenMPTryFlag.cpp"
           OpenMPTryFlag.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\Debug\\cmTC_a7153.exe" /INCREMENTAL /ILK:"cmTC_a7153.dir\\Debug\\cmTC_a7153.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-285o3x/Debug/cmTC_a7153.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-285o3x/Debug/cmTC_a7153.lib" /MACHINE:X64  /machine:x64 cmTC_a7153.dir\\Debug\\OpenMPTryFlag.obj
-          cmTC_a7153.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\Debug\\cmTC_a7153.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\Debug\\cmTC_d50ff.exe" /INCREMENTAL /ILK:"cmTC_d50ff.dir\\Debug\\cmTC_d50ff.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-fg4887/Debug/cmTC_d50ff.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-fg4887/Debug/cmTC_d50ff.lib" /MACHINE:X64  /machine:x64 cmTC_d50ff.dir\\Debug\\OpenMPTryFlag.obj
+          cmTC_d50ff.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\Debug\\cmTC_d50ff.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_a7153.dir\\Debug\\cmTC_a7153.tlog\\unsuccessfulbuild".
-          Touching "cmTC_a7153.dir\\Debug\\cmTC_a7153.tlog\\cmTC_a7153.lastbuildstate".
-        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-285o3x\\cmTC_a7153.vcxproj" (default targets).
+          Deleting file "cmTC_d50ff.dir\\Debug\\cmTC_d50ff.tlog\\unsuccessfulbuild".
+          Touching "cmTC_d50ff.dir\\Debug\\cmTC_d50ff.tlog\\cmTC_d50ff.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fg4887\\cmTC_d50ff.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.26
+        Time Elapsed 00:00:01.21
         
       exitCode: 0
   -
@@ -279,8 +279,8 @@ events:
       - "CMakeLists.txt:30 (find_package)"
     description: "Detecting CXX OpenMP version"
     directories:
-      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0y0sl5"
-      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0y0sl5"
+      source: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-yj8tfn"
+      binary: "C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-yj8tfn"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Od /RTC1"
@@ -290,40 +290,40 @@ events:
       variable: "OpenMP_SPECTEST_CXX_"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0y0sl5'
+        Change Dir: 'C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-yj8tfn'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_2e1c9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_203b8.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.12.12+1cce77968 for .NET Framework
-        Build started 1/21/2025 2:22:51 PM.
+        Build started 1/21/2025 3:24:14 PM.
         
-        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\cmTC_2e1c9.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\cmTC_203b8.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_2e1c9.dir\\Debug\\".
+          Creating directory "cmTC_203b8.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\Debug\\".
-          Creating directory "cmTC_2e1c9.dir\\Debug\\cmTC_2e1c9.tlog\\".
+          Creating directory "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\Debug\\".
+          Creating directory "cmTC_203b8.dir\\Debug\\cmTC_203b8.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_2e1c9.dir\\Debug\\cmTC_2e1c9.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_2e1c9.dir\\Debug\\cmTC_2e1c9.tlog\\unsuccessfulbuild".
+          Creating "cmTC_203b8.dir\\Debug\\cmTC_203b8.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_203b8.dir\\Debug\\cmTC_203b8.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_2e1c9.dir\\Debug\\\\" /Fd"cmTC_2e1c9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\OpenMPCheckVersion.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_203b8.dir\\Debug\\\\" /Fd"cmTC_203b8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\OpenMPCheckVersion.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.42.34436 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_2e1c9.dir\\Debug\\\\" /Fd"cmTC_2e1c9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\OpenMPCheckVersion.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /openmp /std:c++17 /Fo"cmTC_203b8.dir\\Debug\\\\" /Fd"cmTC_203b8.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\OpenMPCheckVersion.cpp"
           OpenMPCheckVersion.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\Debug\\cmTC_2e1c9.exe" /INCREMENTAL /ILK:"cmTC_2e1c9.dir\\Debug\\cmTC_2e1c9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0y0sl5/Debug/cmTC_2e1c9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-0y0sl5/Debug/cmTC_2e1c9.lib" /MACHINE:X64  /machine:x64 cmTC_2e1c9.dir\\Debug\\OpenMPCheckVersion.obj
-          cmTC_2e1c9.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\Debug\\cmTC_2e1c9.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.42.34433\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\Debug\\cmTC_203b8.exe" /INCREMENTAL /ILK:"cmTC_203b8.dir\\Debug\\cmTC_203b8.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-yj8tfn/Debug/cmTC_203b8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/Zheng/PycharmProjects/TAPLite/build/CMakeFiles/CMakeScratch/TryCompile-yj8tfn/Debug/cmTC_203b8.lib" /MACHINE:X64  /machine:x64 cmTC_203b8.dir\\Debug\\OpenMPCheckVersion.obj
+          cmTC_203b8.vcxproj -> C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\Debug\\cmTC_203b8.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_2e1c9.dir\\Debug\\cmTC_2e1c9.tlog\\unsuccessfulbuild".
-          Touching "cmTC_2e1c9.dir\\Debug\\cmTC_2e1c9.tlog\\cmTC_2e1c9.lastbuildstate".
-        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0y0sl5\\cmTC_2e1c9.vcxproj" (default targets).
+          Deleting file "cmTC_203b8.dir\\Debug\\cmTC_203b8.tlog\\unsuccessfulbuild".
+          Touching "cmTC_203b8.dir\\Debug\\cmTC_203b8.tlog\\cmTC_203b8.lastbuildstate".
+        Done Building Project "C:\\Users\\Zheng\\PycharmProjects\\TAPLite\\build\\CMakeFiles\\CMakeScratch\\TryCompile-yj8tfn\\cmTC_203b8.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.29
+        Time Elapsed 00:00:01.24
         
       exitCode: 0
 ...

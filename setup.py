@@ -9,7 +9,7 @@ setup(
     description="A Python binding for TAPLite, a traffic assignment problem solver",
     long_description=open("README.md").read() if os.path.exists("README.md") else "",
     long_description_content_type="text/markdown",
-    author="Xuesong Zhou, Han Zheng",
+    author="Dr. Xuesong (Simon) Zhou, Dr. Han Zheng",
     author_email="your_email@example.com",  # Replace with your email
     url="https://github.com/your_username/TAPLite",  # Replace with your repo URL
     license="MIT",
