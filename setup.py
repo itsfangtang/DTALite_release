@@ -1,36 +1,44 @@
-from skbuild import setup
-from setuptools import find_packages
-import os
-import sys
+import re
+from setuptools import setup
+
+
+_package_name = 'TAPLite'
+
+
+def get_long_description():
+    with open('README.md', 'r') as fh:
+        return fh.read()
+
+
+def get_version():
+    init_file = 'TAPLite/__init__.py'
+    with open(init_file, 'r') as fh:
+        content = fh.read()
+
+    version = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", content, re.M)
+    if version:
+        return version.group(1)
+
+    raise RuntimeError('unable to find version info in __init__.py')
+
 
 setup(
-    name="TAPLite",
-    version="0.1.0",
-    description="A Python binding for TAPLite, a traffic assignment problem solver",
-    long_description=open("README.md").read() if os.path.exists("README.md") else "",
-    long_description_content_type="text/markdown",
-    author="Dr. Xuesong (Simon) Zhou, Dr. Han Zheng",
-    author_email="your_email@example.com",  # Replace with your email
-    url="https://github.com/your_username/TAPLite",  # Replace with your repo URL
-    license="MIT",
-    packages=find_packages(),
-    cmake_install_dir="TAPLite",
-    cmake_args=[
-        "-DCMAKE_BUILD_TYPE=Release",
-        "-DPYTHON_EXECUTABLE:FILEPATH={}".format(sys.executable)
-    ],
-    python_requires=">=3.7",
-    install_requires=[
-        "pybind11>=2.6.0",
-        "scikit-build",
-        "setuptools",
-        "wheel",
-    ],
+    name=_package_name,
+    version=get_version(),
+    author='Dr. Xuesong Zhou, Dr. Peiheng Li',
+    author_email='xzhou74@asu.edu, jdlph@hotmail.com',
+    description='An open-source, cross-platform, lightweight, and fast Python\
+                path engine for networks encoded in GMNS',
+    long_description=get_long_description(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/jdlph/PATH4GMNS',
+    packages=[_package_name],
+    package_dir={_package_name: _package_name},
+    package_data={_package_name: ['bin/*']},
+    license='Apache License 2.0',
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "Programming Language :: C++",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: Apache Software License',
+        'Operating System :: OS Independent',
     ],
-    zip_safe=False,
 )

@@ -22,7 +22,7 @@
 #define INVALID -1
 
 #define VALID(x) ((x) != -1)
-
+#include "path_engine.h"
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -1250,7 +1250,7 @@ void InitializeLinkIndices(int num_modes, int no_zones, int max_routes)
 	printf("Memmory creation time for 5D link path matrix: %lld hours %lld minutes %lld seconds %lld ms\n", hours.count(), minutes.count(), seconds.count(), milliseconds.count());
 }
 
-int main(int argc, char** argv)
+int main()
 {
 
 	fopen_s(&summary_log_file, "summary_log_file.txt", "w");
@@ -2720,3 +2720,7 @@ struct Link {
 //
 //	return 0;
 //}
+
+void TAPLiteAPI() {
+	main();
+}
