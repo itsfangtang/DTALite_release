@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-project ("TAPLite")
+project ("DTALite")
 
 option(BUILD_EXE "BUILD Executable or not" ON)
 
@@ -21,9 +21,9 @@ set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
 
 
 if (BUILD_EXE)
-    add_executable(${PROJECT_NAME} TAPLite/core/TAPLite.cpp)
+    add_executable(${PROJECT_NAME} DTALite/core/TAPLite.cpp)
 else()
-    add_library(${PROJECT_NAME} SHARED TAPLite/core/TAPLite.cpp)
+    add_library(${PROJECT_NAME} SHARED DTALite/core/TAPLite.cpp)
 endif()
 
 
