@@ -5,21 +5,21 @@ DTALite is an open-source, cross-platform, lightweight, and fast Python path eng
 ## Quick Start
 
 1. **Tutorial** written in Jupyter notebook with step-by-step demonstration (coming soon).
-2. **[Documentation](https://path4gmns.readthedocs.io/en/stable/)** on Installation, Use Cases, Public API, and more (coming soon).
+2. **Documentation** on Installation, Use Cases, Public API, and more (coming soon).
 
 
 ## Installation
-DTALite has been published on [PyPI](https://pypi.org/project/DTALite/0.0.1.post1/), and can be installed using
+DTALite has been published on [PyPI](https://pypi.org/project/DTALite/), and can be installed using
 ```
 $ pip install DTALite
 ```
 
 ### Dependency
-The Python modules are written in **Python 3.x**, which is the minimum requirement to explore the most of DTALite.
+The Python modules are written in **Python 3.x**, which is the minimum requirement to explore most of DTALite.
 
 
 ## Testbed illustration
-Users can find the test datasets and code in [test](https://github.com/itsfangtang/DTALite_release/tree/main/test) folder.
+Users can find the test datasets and code in the [test](https://github.com/itsfangtang/DTALite_release/tree/main/test) folder.
 
 **Inputs**: node.csv, link.csv, demand.csv
 **Outputs**: link_performance.csv,  od_performance.csv
