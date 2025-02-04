@@ -16,7 +16,8 @@ from os import path
 from time import time
 
 __all__ = [
-    'dtalite'
+    'assignment',
+    'simulation'
 ]
 
 
@@ -33,9 +34,13 @@ elif _os.startswith('Darwin'):
         _dll_file = path.join(path.dirname(__file__), 'bin/DTALite_arm.dylib')
 else:
     raise Exception('Please build the shared library compatible to your OS\
-                    using source files in engine_cpp!')
+                    using source files in DTALite/core!')
 
 _cdll = ctypes.cdll.LoadLibrary(_dll_file)
 
-def dtalite():
-    _cdll.DTALiteAPI()
+def assignment():
+    _cdll.DTA_AssignmentAPI()
+
+def simulation():
+    _cdll.DTA_SimulationAPI()
+

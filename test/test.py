@@ -1,4 +1,5 @@
 import DTALite as dta
 
-dta.dtalite()
+dta.assignment()
 
+# dta.simulation()

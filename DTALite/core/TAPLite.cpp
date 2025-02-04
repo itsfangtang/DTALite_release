@@ -23,7 +23,6 @@
 
 #define VALID(x) ((x) != -1)
 
-#include "path_engine.h"
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -162,6 +161,7 @@ struct mode_type {
 
 
 mode_type g_mode_type_vector[MAX_MODE_TYPES];
+
 int g_metric_system_flag = 0; 
 void StatusMessage(const char* group, const char* format, ...);
 void ExitMessage(const char* format, ...);
@@ -1236,7 +1236,7 @@ void OutputODPerformance(const std::string& filename)
 	std::ofstream outputFile(filename);  // Open the file for writing
 
 	// Write the CSV header in lowercase
-	outputFile << "mode,o_zone_id,d_zone_id,total_distance_mile,total_distance_km,total_free_flow_travel_time,total_congestion_travel_time,volume,\n";
+	outputFile << "mode,o_zone_id,d_zone_id,o_x_coord,o_y_coord,d_x_coord,d_y_coord,total_distance_mile,total_distance_km,total_free_flow_travel_time,total_congestion_travel_time,volume,\n";
 	double grand_totalDistance = 0.0;
 	double grand_totalFreeFlowTravelTime = 0.0;
 	double grand_totalTravelTime = 0.0;
@@ -1312,8 +1312,20 @@ void OutputODPerformance(const std::string& filename)
 							grand_totalFreeFlowTravelTime += totalFreeFlowTravelTime * volume;
 							grand_totalTravelTime += totalTravelTime * volume;
 							grand_total_count += volume;
+
+							int internal_o_node_id = g_map_external_node_id_2_node_seq_no[Orig];
+							int internal_d_node_id = g_map_external_node_id_2_node_seq_no[Dest];
+							double o_x_coord, o_y_coord;
+							double d_x_coord, d_y_coord;
+							o_x_coord = g_node_vector[internal_o_node_id].x;
+							o_y_coord = g_node_vector[internal_o_node_id].y;
+							d_x_coord = g_node_vector[internal_d_node_id].x;
+							d_y_coord = g_node_vector[internal_d_node_id].y;
+
 							// Write the data for this OD pair and route to the CSV file
 							outputFile << g_mode_type_vector[m].mode_type.c_str() << "," << Orig << "," << Dest << ","
+								<< o_x_coord  <<"," << o_y_coord  <<","
+								<< d_x_coord << "," << d_y_coord << ","
 								<< totalDistance << "," << totalDistance*1.609 << "," << totalFreeFlowTravelTime << ","
 								<< totalTravelTime << "," << volume << "\n";
 
@@ -3830,12 +3842,14 @@ int SimulationAPI()
 	fclose(summary_log_file);
 	return 0;
 }
-int main()
-{
+
+
+
+void DTA_AssignmentAPI() {
 	AssignmentAPI();
-	//SimulationAPI();
 }
 
-void DTALiteAPI() {
-	main();
+
+void DTA_SimulationAPI() {
+	SimulationAPI();
 }

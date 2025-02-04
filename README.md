@@ -5,7 +5,7 @@ DTALite is an open-source, cross-platform, lightweight, and fast Python path eng
 ## Quick Start
 
 1. **Tutorial** written in Jupyter notebook with step-by-step demonstration (coming soon).
-2. **[Documentation](https://path4gmns.readthedocs.io/en/stable/)** on Installation, Use Cases, Public API, and more (coming soon).
+2. **Documentation** on Installation, Use Cases, Public API, and more (coming soon).
 
 
 ## Installation
@@ -33,7 +33,7 @@ dta.dtalite()
 
 ## How to Cite
 
-Tang, F. and Zhou, X. (2025, Jan 29). *DTALite*. Retrieved from https://github.com/itsfangtang/DTALite_release
+Tang, F., Zheng, H., and Zhou, X. (2025, Jan 29). *DTALite*. Retrieved from https://github.com/itsfangtang/DTALite_release
 
 
 ## Please Contribute
