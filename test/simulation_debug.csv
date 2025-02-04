@@ -1,0 +1,5 @@
+time,event_type,agent_id,link_id,queue_size,details
+0,status,0,0,0,minute_summary
+600,status,0,0,0,minute_summary
+1200,status,0,0,0,minute_summary
+1800,status,0,0,0,minute_summary
