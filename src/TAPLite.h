@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef GUARD_PATH_ENGINE_H
 #define GUARD_PATH_ENGINE_H
 
@@ -12,11 +10,22 @@
 extern "C" PATH_ENGINE_API void DTA_AssignmentAPI();
 
 extern "C" PATH_ENGINE_API void DTA_SimulationAPI();
-#endif
 
 #define BUFFERSIZE 1000
 #define MAX_NO_BISECTITERATION 5 /* Avoids infinite loops */
 
+#include <fstream>
+#include <map>
+#include <string>
+#include <sstream>
+#include <vector>
+
+static int MinLineSearchIterations = 5;
+static int ActualIterations = 0;
+static double LastLambda = 1.0;
+
+std::map<int, int> g_map_external_node_id_2_node_seq_no;
+std::map<int, int> g_map_node_seq_no_2_external_node_id;
 
 class CDTACSVParser {
 public:
@@ -346,148 +355,17 @@ bool CDTACSVParser::GetValueByFieldName(std::string field_name,
     }
 }
 
-std::map<int, int> g_map_external_node_id_2_node_seq_no;
-std::map<int, int> g_map_node_seq_no_2_external_node_id;
+void ExitMessage(const char* format, ...)
+{
+	va_list ap;
 
+	// vprintf(format, ap);
+	printf("\n");
 
+	getchar();
 
-typedef struct list_item {
-    int value;
-    struct list_item* next_item;
-} list_item;
-
-typedef list_item* sorted_list;
-
-typedef struct lex_node {
-    int value;
-    struct lex_node* next_alternative;
-    struct lex_node* next_item;
-} lex_node;
-
-static int MinLineSearchIterations = 5;
-static int ActualIterations = 0;
-static double LastLambda = 1.0;
-
-/* Function  */
-int ListContains(int value, sorted_list list);
-void AddToSortedList(int value, sorted_list* list);
-int RemoveFromSortedList(int value, sorted_list* list);
-void FreeSortedList(sorted_list list);
-sorted_list CopySortedList(sorted_list list);
-
-
-
-
-
-
-/* Create a new list item */
-static list_item* CreateListItem(int value) {
-    list_item* new_item = (list_item*)malloc(sizeof(list_item));
-    if (new_item == NULL) {
-        printf("Error in memory allocation of list item.\n");
-        exit(EXIT_FAILURE);
-    }
-    new_item->value = value;
-    new_item->next_item = NULL;
-    return new_item;
+	exit(EXIT_FAILURE);
 }
-
-/* Check if value exists in list */
-int ListContains(int value, sorted_list list) {
-    list_item* item;
-    for (item = list; item != NULL && item->value < value; item = item->next_item);
-    return (item != NULL && item->value == value) ? 1 : 0;
-}
-
-/* Add a new item to the list */
-static list_item* InsertSortedListItem(int value, list_item* item) {
-    list_item* new_item;
-    list_item* remaining_list = item->next_item;
-
-    if (remaining_list == NULL || value < remaining_list->value) {
-        new_item = CreateListItem(value);
-        new_item->next_item = remaining_list;
-        item->next_item = new_item;
-        return new_item;
-    }
-    return (value == remaining_list->value) ? remaining_list : InsertSortedListItem(value, remaining_list);
-}
-
-/* Public function to add value to sorted list */
-void AddToSortedList(int value, sorted_list* list) {
-    list_item* new_item;
-
-    if (*list == NULL) {
-        *list = CreateListItem(value);
-    } else if (value < (*list)->value) {
-        new_item = CreateListItem(value);
-        new_item->next_item = *list;
-        *list = new_item;
-    } else if (value > (*list)->value) {
-        InsertSortedListItem(value, *list);
-    }
-}
-
-/* Remove an item from the list */
-static int RemoveSortedListItem(int value, list_item* item) {
-    list_item* remaining_list = item->next_item;
-
-    if (remaining_list == NULL) return 0;
-
-    if (value == remaining_list->value) {
-        item->next_item = remaining_list->next_item;
-        free(remaining_list);
-        return 1;
-    }
-    return (value < remaining_list->value) ? 0 : RemoveSortedListItem(value, remaining_list);
-}
-
-/* Public function to remove value from the list */
-int RemoveFromSortedList(int value, sorted_list* list) {
-    list_item* item_to_free;
-
-    if (*list == NULL || value < (*list)->value) return 0;
-
-    if (value == (*list)->value) {
-        item_to_free = *list;
-        *list = (*list)->next_item;
-        free(item_to_free);
-        return 1;
-    }
-    return RemoveSortedListItem(value, *list);
-}
-
-/* Free all items in the list recursively */
-static void FreeListItems(list_item* item) {
-    if (item->next_item != NULL) FreeListItems(item->next_item);
-    free(item);
-}
-
-/* Public function to free the list */
-void FreeSortedList(sorted_list list) {
-    if (list != NULL) FreeListItems(list);
-}
-
-/* Create a copy of the list */
-sorted_list CopySortedList(sorted_list list) {
-    if (list == NULL) return NULL;
-
-    list_item* item = list;
-    sorted_list new_list = CreateListItem(item->value);
-    list_item* new_item = new_list;
-
-    while ((item = item->next_item) != NULL) {
-        new_item->next_item = CreateListItem(item->value);
-        new_item = new_item->next_item;
-    }
-    return new_list;
-}
-
-
-
-
-
-
 
 // Function to allocate a 1D array
 void* Alloc_1D(int dim1, size_t size) {
@@ -582,3 +460,5 @@ struct CLink {
     double capacity;
     int free_speed;
 };
+
+#endif

@@ -38,6 +38,7 @@ else:
 
 _cdll = ctypes.cdll.LoadLibrary(_dll_file)
 
+
 def assignment():
     _cdll.DTA_AssignmentAPI()
 

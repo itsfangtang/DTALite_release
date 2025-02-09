@@ -21,9 +21,9 @@ set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
 
 
 if (BUILD_EXE)
-    add_executable(${PROJECT_NAME} DTALite/core/TAPLite.cpp)
+    add_executable(${PROJECT_NAME} src/TAPLite.cpp)
 else()
-    add_library(${PROJECT_NAME} SHARED DTALite/core/TAPLite.cpp)
+    add_library(${PROJECT_NAME} SHARED src/TAPLite.cpp)
 endif()
 
 
