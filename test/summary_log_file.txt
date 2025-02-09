@@ -1,31 +1,14 @@
-no_nodes= 933, no_zones = 387, FirstThruNode (seq No) = 388, number_of_links = 2950
+no_nodes= 4, no_zones = 2, FirstThruNode (seq No) = 3, number_of_links = 4
 read demand file demand.csv
- mode type = auto, total_volume = 1260907.440001
-
-=== Loading Agents ===
-Total agents to load: 0
-Demand starting time in simulation interval: 8400
-
-=== Simulation Time: 0 minutes ===
-Total agents loaded: 0
-Total link transfers: 0
-Total node transfers: 0
-Total completed trips: 0
-
-=== Simulation Time: 60 minutes ===
-Total agents loaded: 0
-Total link transfers: 0
-Total node transfers: 0
-Total completed trips: 0
-
-=== Simulation Time: 120 minutes ===
-Total agents loaded: 0
-Total link transfers: 0
-Total node transfers: 0
-Total completed trips: 0
-
-=== Simulation Time: 180 minutes ===
-Total agents loaded: 0
-Total link transfers: 0
-Total node transfers: 0
-Total completed trips: 0
+ mode type = auto, total_volume = 7000.000000
+iter No = 0, sys. TT =  140.769368, least TT =  175.000005, gap = -19.560364 %
+iter No = 1, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 2, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 3, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 4, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 5, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 6, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 7, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 8, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+iter No = 9, Lambda = 0.000000, g_System_VMT = 87.010566, sys. TT =  140.769368, least TT =  175.384687, gap = -19.736797 % 
+CPU running time: 0 hours 0 minutes 0 seconds 3 ms
