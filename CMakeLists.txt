@@ -1,31 +1,12 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.10.0)
 
-project ("DTALite")
-
-option(BUILD_EXE "BUILD Executable or not" ON)
-
-if(WIN32)
-    message("Building dll file on Windows")
-elseif(UNIX)
-    message("Building so or dylib file on ${CMAKE_SYSTEM_NAME}")
-endif()
+project(DTALite VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_OSX_ARCHITECTURES "arm64")
 
-# note CMAKE_BUILD_TYPE WILL BE INGNORED for IDE generators, like Visual Studio and Xcode
-# it only works for single-configuration generators, e.g., make and Ninja
-# see https://cmake.org/cmake/help/v3.0/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_types for details
-set(CMAKE_BUILD_TYPE  "Release")
-set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
-
-
-if (BUILD_EXE)
-    add_executable(${PROJECT_NAME} src/TAPLite.cpp)
-else()
-    add_library(${PROJECT_NAME} SHARED src/TAPLite.cpp)
-endif()
-
+set(CMAKE_BUILD_TYPE Release)
+add_library(DTALite SHARED src/TAPLite.cpp)
+# add_executable(DTALite SHARED src/TAPLite.cpp)
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")

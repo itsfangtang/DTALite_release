@@ -12,7 +12,7 @@ import collections
 import ctypes
 import heapq
 import platform
-from os import path
+import os
 from time import time
 
 __all__ = [
@@ -20,28 +20,22 @@ __all__ = [
     'simulation'
 ]
 
-
-_os = platform.system()
-if _os.startswith('Windows'):
-    _dll_file = path.join(path.dirname(__file__), 'bin/DTALite.dll')
-elif _os.startswith('Linux'):
-    _dll_file = path.join(path.dirname(__file__), 'bin/DTALite.so')
-elif _os.startswith('Darwin'):
-    # check CPU is Intel or Apple Silicon
-    if platform.machine().startswith('x86_64'):
-        _dll_file = path.join(path.dirname(__file__), 'bin/DTALite_x86.dylib')
-    else:
-        _dll_file = path.join(path.dirname(__file__), 'bin/DTALite_arm.dylib')
+current_os = platform.system()
+if current_os == "Darwin":
+    library_name = "DTALite_arm.dylib"
+elif current_os == "Windows":
+    library_name = "DTALite.dll"
+elif current_os == "Linux":
+    library_name = "DTALite.so"
 else:
-    raise Exception('Please build the shared library compatible to your OS\
-                    using source files in DTALite/core!')
+    raise OSError("Unsupported operating system")
 
-_cdll = ctypes.cdll.LoadLibrary(_dll_file)
+dtalib = ctypes.CDLL(os.path.join(os.path.dirname(__file__), library_name))
 
 
 def assignment():
-    _cdll.DTA_AssignmentAPI()
+    dtalib.DTA_AssignmentAPI()
 
 def simulation():
-    _cdll.DTA_SimulationAPI()
+    dtalib.DTA_SimulationAPI()
 
