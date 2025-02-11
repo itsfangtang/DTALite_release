@@ -21,3 +21,10 @@ jobs:
 
       - name: "Build"
         run: rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -GNinja .. && ninja
+
+      - name: Upload build directory as artifact
+        # if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-directory
+          path: build/
