@@ -1,4 +1,4 @@
-// TAPLite.cpp : This file contains the 'main' function. Program execution begins and ends here.
+﻿// TAPLite.cpp : This file contains the 'main' function. Program execution begins and ends here.
 
 // This code is built based on the implementation available at:
 // http://www.bgu.ac.il/~bargera/tntp/FW.zip
@@ -6,7 +6,7 @@
 // the modified label correcting (MLC) algorithm in C. For more details, see mincostroutes.cpp. 
 // The enhanced C++ counterpart has served as the path engine for Path4GMNS and TransOMS.
 // https://github.com/jdlph/TAP101
-
+#define M_PI 3.14159265358979323846
 #define FLOAT_ACCURACY 1.0E-15
 #define NO_COSTPARAMETERS 4
 #define IVTT 0
@@ -79,7 +79,7 @@ struct link_record {
 	std::string allowed_uses;
 	int mode_allowed_use[MAX_MODE_TYPES];
 	double mode_MainVolume[MAX_MODE_TYPES];
-	double mode_Base_Volume[MAX_MODE_TYPES];
+	double mode_Base_demand_volume[MAX_MODE_TYPES];
 	double mode_SubVolume[MAX_MODE_TYPES];
 	double mode_SDVolume[MAX_MODE_TYPES];
 
@@ -94,8 +94,10 @@ struct link_record {
 	double GenCost;
 	double GenCostDer;
 	double Ref_volume;
-	double Base_volume;
+	double Base_demand_volume;
+	double background_volume; 
 	double Obs_volume;
+	double reassignment_volume;
 	std::string geometry;
 
 	int timing_arc_flag, cycle_length, start_green_time, end_green_time;
@@ -118,7 +120,7 @@ struct link_record {
 		BPR_TT = 0;
 		QVDF_TT = 0;
 		Ref_volume = 0;
-		Base_volume = 0;
+		Base_demand_volume = 0;
 		Obs_volume = -1;
 		Lane_SaturationFlowRate = 1800; 
 
@@ -126,6 +128,7 @@ struct link_record {
 		cycle_length = 60;
 		start_green_time = 0;
 		end_green_time = 30; 
+		background_volume = 0; 
 
 	}
 	void setup(int num_of_modes)
@@ -144,11 +147,11 @@ struct link_record {
 		BPR_TT = 0;
 		QVDF_TT = 0;
 		Ref_volume = 0;
-		Base_volume = 0;
+		Base_demand_volume = 0;
 		Obs_volume = -1;
 		for (int m = 1; m <= num_of_modes; m++)
 		{
-			mode_Base_Volume[m] = 0;
+			mode_Base_demand_volume[m] = 0;
 		}
 	}
 };
@@ -222,6 +225,7 @@ int	demand_period_ending_hours = 8;
 int g_tap_log_file = 0;
 int g_base_demand_mode = 1;
 int g_ODME_mode = 0;
+int g_ODME_target_od = -1;
 double g_ODME_obs_VMT = -1;
 double g_System_VMT = 0;
 
@@ -666,7 +670,7 @@ void All_or_Nothing_Assign(int Assignment_iteration_no, double*** ODflow, int***
 	{
 		for (int k = 1; k <= number_of_links; k++)
 		{
-			Volume[k] = Link[k].Base_volume;
+			Volume[k] = Link[k].Base_demand_volume;
 
 			for (int p = 0; p < g_number_of_processors; p++)
 			{
@@ -675,7 +679,7 @@ void All_or_Nothing_Assign(int Assignment_iteration_no, double*** ODflow, int***
 
 			for (int m = 1; m <= number_of_modes; m++)
 			{
-				Link[k].mode_MainVolume[m] = Link[k].mode_Base_Volume[m];
+				Link[k].mode_MainVolume[m] = Link[k].mode_Base_demand_volume[m];
 
 				for (int p = 0; p < g_number_of_processors; p++)
 				{
@@ -855,19 +859,23 @@ void performODME(std::vector<double> theta, double* MainVolume, struct link_reco
         // --- Log simple deviation measures ---
         {
             // OD deviation: compute sum of absolute differences (and average)
+
             double totalODDev = 0.0;
             int odCount = 0;
-            for (int m = 1; m <= numModes; ++m) {
-                for (int Orig = 1; Orig <= numZones; ++Orig) {
-                    for (int Dest = 1; Dest <= numZones; ++Dest) {
-                        if (Orig == Dest)
-                            continue;
-                        double diff = MDODflow[m][Orig][Dest] - targetMDODflow[m][Orig][Dest];
-                        totalODDev += std::fabs(diff);
-                        odCount++;
-                    }
-                }
-            }
+			if (g_ODME_target_od >= 1)
+			{
+				for (int m = 1; m <= numModes; ++m) {
+					for (int Orig = 1; Orig <= numZones; ++Orig) {
+						for (int Dest = 1; Dest <= numZones; ++Dest) {
+							if (Orig == Dest)
+								continue;
+							double diff = MDODflow[m][Orig][Dest] - targetMDODflow[m][Orig][Dest];
+							totalODDev += std::fabs(diff);
+							odCount++;
+						}
+					}
+				}
+			}
             double avgODDev = (odCount > 0 ? totalODDev / odCount : 0.0);
 
             // Link deviation: compute link flows and compare with observed volume
@@ -909,6 +917,10 @@ void performODME(std::vector<double> theta, double* MainVolume, struct link_reco
                 VMT += linkFlows[l] * Link[l].length;
             }
             double vmtDev = (VMT_target > 0 ? (VMT - VMT_target) : 0.0);
+
+			cout << "[Deviation Log] OD avg deviation = " << avgODDev
+				<< ", Link avg deviation = " << avgLinkDev
+				<< ", VMT deviation = " << vmtDev << "\n";
 
             logFile << "[Deviation Log] OD avg deviation = " << avgODDev
                     << ", Link avg deviation = " << avgLinkDev
@@ -955,12 +967,10 @@ void performODME(std::vector<double> theta, double* MainVolume, struct link_reco
                         int count_usage = entry.second;
                         double sensitivity = static_cast<double>(count_usage) / routeCount;
                         if (Link[link_id].Obs_volume > 1) {
-                            // Placeholder term if you wish to refine this component.
-                            grad_link += 2.0 * w_link * (0.0 + 0.0) * sensitivity;
+                            grad_link += 2.0 * w_link * sensitivity;
                         }
                         if (VMT_target > 1) {
-                            // Placeholder term.
-                            grad_vmt += 2.0 * w_vmt * (0.0 + 0.0) * (Link[link_id].length * sensitivity);
+                            grad_vmt += 2.0 * w_vmt * (Link[link_id].length * sensitivity);
                         }
                     }
                     double grad_od = 2.0 * w_od * (od_flow - targetMDODflow[m][Orig][Dest]);
@@ -1390,10 +1400,11 @@ struct RouteData {
 	int unique_route_id;             // A sequential unique id for output
 	std::string nodeIDsStr;          // Node IDs (string)
 	std::string linkIDsStr;          // Link IDs (string)
+	std::string linkLengthStr;          // Link Length (string)
 	double totalDistance;
 	double totalFreeFlowTravelTime;
 	double totalTravelTime;
-	double accumulatedTheta;         // Sum of theta for all routes with this key
+	double accumulatedTheta = 0;         // Sum of theta for all routes with this key
 	std::string routeKey;            // Unique key (e.g., based on node and link sums)
 };
 
@@ -1405,7 +1416,6 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 		return; 
 	// Write the CSV header in lowercase
 	outputFile << "mode,route_id,o_zone_id,d_zone_id,unique_route_id,prob,node_ids,link_ids,distance_mile,total_distance_km,total_free_flow_travel_time,total_travel_time,route_key,volume,\n";
-
 
 
 	for (int m = 1; m < linkIndices.size(); ++m)
@@ -1429,7 +1439,8 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 						double totalTravelTime = 0.0;
 						std::string nodeIDsStr;
 						std::string linkIDsStr;
-
+						std::string linkLengthStr;
+						
 						int nodeSum = 0;  // Sum of node IDs (for uniqueness key)
 						int linkSum = 0;  // Sum of link IDs (for uniqueness key)
 
@@ -1445,6 +1456,8 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 
 							// Append the link index (as a proxy for link ID) and accumulate.
 							linkIDsStr += std::to_string(k) + ";";
+							//double length = Link[k].length; 
+							//linkLengthStr += std::to_string(length) + ";";
 							linkSum += k;
 
 							// Sum the distance and travel times.
@@ -1474,10 +1487,20 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 							rd.unique_route_id = unique_route_id;  // Unique id for output.
 							rd.nodeIDsStr = nodeIDsStr;
 							rd.linkIDsStr = linkIDsStr;
+							//rd.linkLengthStr = linkLengthStr; 
 							rd.totalDistance = totalDistance;
 							rd.totalFreeFlowTravelTime = totalFreeFlowTravelTime;
 							rd.totalTravelTime = totalTravelTime;
+
+							if(route_id < theta.size() )
+							{
 							rd.accumulatedTheta = theta[route_id];  // Initialize with current theta.
+							}
+							else
+							{
+								rd.accumulatedTheta = unique_route_id *1.0/uniqueRoutes.size();
+
+							}
 							rd.routeKey = routeKey;
 
 							// Insert the new unique route.
@@ -1497,9 +1520,18 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 				for (const auto& pair : uniqueRoutes)
 				{
 					const RouteData& rd = pair.second;
-					float od_volume = MDODflow[m][Orig][Dest];
-					float route_volume = od_volume * rd.accumulatedTheta;
+					float od_volume = 1;
+					float route_volume = 1;
 
+					if(MDODflow!=NULL)
+					{
+						od_volume = MDODflow[m][Orig][Dest];
+
+						route_volume = od_volume * rd.accumulatedTheta;
+					} 
+
+					if(od_volume >=1.0)
+					{
 					// (Optional) Remove trailing semicolon from linkIDsStr if needed.
 					std::string cleanedLinkIDsStr = rd.linkIDsStr;
 					if (!cleanedLinkIDsStr.empty() && cleanedLinkIDsStr.back() == ';')
@@ -1513,12 +1545,24 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 						<< rd.accumulatedTheta << ","
 						<< rd.nodeIDsStr << ","
 						<< cleanedLinkIDsStr << ","
+						//<< rd.linkLengthStr << ","
 						<< rd.totalDistance << ","
 						<< rd.totalDistance * 1.609 << ","
 						<< rd.totalFreeFlowTravelTime << ","
 						<< rd.totalTravelTime << ","
 						<< rd.routeKey << ","
 						<< route_volume << "\n";
+					}
+					else
+					{
+
+						// Process the route in reverse order (as in your code).
+						for (int i = linkIndices[m][Orig][Dest][rd.unique_route_id].size() - 1; i >= 0; --i)
+						{
+							int k = linkIndices[m][Orig][Dest][rd.unique_route_id][i];
+							Link[k].background_volume += route_volume;
+						}
+					}
 				}
 
 			}
@@ -1532,6 +1576,9 @@ void OutputRouteDetails(const std::string& filename, std::vector<double> theta)
 	std::cout << "Output written to " << filename << std::endl;
 
 }
+
+
+
 
 constexpr auto LCG_a = 17364;
 constexpr auto LCG_c = 0;
@@ -1798,13 +1845,24 @@ void OutputVehicleDetails(const std::string& filename, std::vector<double> theta
 void OutputODPerformance(const std::string& filename)
 {
 	std::ofstream outputFile(filename);  // Open the file for writing
+	std::ofstream googleMapsFile("google_maps_od_distance.csv");
+
+	if (!googleMapsFile.is_open())
+	{
+		std::cerr << "Error: Could not open Google Maps links file." << std::endl;
+		return;
+	}
+
+	googleMapsFile << "mode,o_zone_id,d_zone_id,volume,total_distance_mile,total_distance_km,straight_line_distance_mile,straight_line_distance_km,distance_ratio,total_free_flow_travel_time,total_congestion_travel_time,google_maps_http_link\n";
 
 	// Write the CSV header in lowercase
-	outputFile << "mode,o_zone_id,d_zone_id,o_x_coord,o_y_coord,d_x_coord,d_y_coord,total_distance_mile,total_distance_km,total_free_flow_travel_time,total_congestion_travel_time,volume,\n";
+	outputFile << "mode,o_zone_id,d_zone_id,o_x_coord,o_y_coord,d_x_coord,d_y_coord,total_distance_mile,total_distance_km,straight_line_distance_mile,straight_line_distance_km,distance_ratio,total_free_flow_travel_time,total_congestion_travel_time,volume,\n";
 	double grand_totalDistance = 0.0;
 	double grand_totalFreeFlowTravelTime = 0.0;
 	double grand_totalTravelTime = 0.0;
 	double grand_total_count = 0;
+	double grand_total_straight_line_distance = 0.0;
+	double grand_total_distance_ratio = 0.0;
 
 
 	for (int m = 1; m < linkIndices.size(); ++m)
@@ -1869,7 +1927,7 @@ void OutputODPerformance(const std::string& filename)
 							if (!linkIDsStr.empty())
 								linkIDsStr.pop_back();
 
-							float volume = MDODflow[m][Orig][Dest]; 
+							float volume = MDODflow[m][Orig][Dest];
 
 
 							grand_totalDistance += totalDistance * volume;
@@ -1886,12 +1944,68 @@ void OutputODPerformance(const std::string& filename)
 							d_x_coord = g_node_vector[internal_d_node_id].x;
 							d_y_coord = g_node_vector[internal_d_node_id].y;
 
+							// Calculate straight line distance using Haversine formula for WGS84 coordinates
+							// o_x_coord and d_x_coord are longitudes
+							// o_y_coord and d_y_coord are latitudes
+
+							// Convert latitude and longitude from degrees to radians
+							double lat1_rad = o_y_coord * M_PI / 180.0;
+							double lon1_rad = o_x_coord * M_PI / 180.0;
+							double lat2_rad = d_y_coord * M_PI / 180.0;
+							double lon2_rad = d_x_coord * M_PI / 180.0;
+
+							// Haversine formula
+							double dlon = lon2_rad - lon1_rad;
+							double dlat = lat2_rad - lat1_rad;
+							double a = pow(sin(dlat / 2), 2) + cos(lat1_rad) * cos(lat2_rad) * pow(sin(dlon / 2), 2);
+							double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+							// Earth's radius in miles
+							double earth_radius_miles = 3958.8; // miles
+
+							// Calculate the distance
+							double straight_line_distance_mile = earth_radius_miles * c;
+							double straight_line_distance_km = straight_line_distance_mile * 1.609;
+
+							// Calculate the ratio of assigned route distance to straight line distance
+							double distance_ratio = 1.0;  // Default value
+							if (straight_line_distance_mile > 0.001)  // Avoid division by very small numbers
+							{
+								distance_ratio = totalDistance / straight_line_distance_mile;
+							}
+
+							grand_total_straight_line_distance += straight_line_distance_mile * volume;
+							grand_total_distance_ratio += distance_ratio * volume;
+
 							// Write the data for this OD pair and route to the CSV file
 							outputFile << g_mode_type_vector[m].mode_type.c_str() << "," << Orig << "," << Dest << ","
-								<< o_x_coord  <<"," << o_y_coord  <<","
+								<< o_x_coord << "," << o_y_coord << ","
 								<< d_x_coord << "," << d_y_coord << ","
-								<< totalDistance << "," << totalDistance*1.609 << "," << totalFreeFlowTravelTime << ","
+								<< totalDistance << "," << totalDistance * 1.609 << ","
+								<< straight_line_distance_mile << "," << straight_line_distance_km << "," << distance_ratio << ","
+								<< totalFreeFlowTravelTime << ","
 								<< totalTravelTime << "," << volume << "\n";
+
+							// If volume > 10, create Google Maps link
+							if (volume > 10.0)
+							{
+								// Format Google Maps URL with coordinates
+								// Format: https://www.google.com/maps/dir/origin_lat,origin_lng/destination_lat,destination_lng/
+								std::string googleMapsLink = "https://www.google.com/maps/dir/" +
+									std::to_string(o_y_coord) + "," + std::to_string(o_x_coord) + "/" +
+									std::to_string(d_y_coord) + "," + std::to_string(d_x_coord) + "/";
+
+								// Write to Google Maps links file
+								googleMapsFile << g_mode_type_vector[m].mode_type.c_str() << ","
+									<< Orig << ","
+									<< Dest << ","
+									<< volume << ","
+									<< totalDistance << "," << totalDistance * 1.609 << ","
+									<< straight_line_distance_mile << "," << straight_line_distance_km << "," << distance_ratio << ","
+									<< totalFreeFlowTravelTime << ","
+									<< totalTravelTime << ","
+									<< "\"" << googleMapsLink << "\"\n";
+							}
 
 							unique_route_id++;
 						}
@@ -1909,8 +2023,14 @@ void OutputODPerformance(const std::string& filename)
 	if (grand_total_count < 0.001)
 		grand_total_count = 0.001;
 
+	double avg_distance_ratio = grand_total_distance_ratio / grand_total_count;
+
 	std::cout << "OD performance summary: avg distance = "
 		<< grand_totalDistance / grand_total_count << " miles, "
+		<< ", avg straight-line distance = "
+		<< grand_total_straight_line_distance / grand_total_count << " miles, "
+		<< ", avg distance ratio = "
+		<< avg_distance_ratio << " "
 		<< ", avg free-flow travel time = "
 		<< grand_totalFreeFlowTravelTime / grand_total_count << " min, "
 		<< ", avg total travel time = "
@@ -1921,6 +2041,9 @@ void OutputODPerformance(const std::string& filename)
 	// Close the file after writing
 	outputFile.close();
 	std::cout << "Output written to " << filename << std::endl;
+
+	googleMapsFile.close();
+	std::cout << "Google Maps links for high-volume OD pairs (volume > 10) written to google_maps_links.csv" << std::endl;
 }
 
 
@@ -1989,6 +2112,7 @@ int get_number_of_nodes_from_node_file(int& number_of_zones, int& l_FirstThruNod
 			parser_node.GetValueByFieldName("y_coord", y_coord);
 			g_node_vector[internal_node_id].x = x_coord;
 			g_node_vector[internal_node_id].y = y_coord;
+			g_node_vector[internal_node_id].node_id = node_id; 
 		}
 
 		parser_node.CloseCSVFile();
@@ -2053,7 +2177,7 @@ void read_settings_file()
 			// field headers.
 		{
 			g_number_of_processors = 4;
-			parser_settings.GetValueByFieldName("metric_system", g_metric_system_flag);
+
 			parser_settings.GetValueByFieldName("number_of_iterations", TotalAssignIterations);
 			parser_settings.GetValueByFieldName("number_of_processors", g_number_of_processors);
 			parser_settings.GetValueByFieldName("demand_period_starting_hours", demand_period_starting_hours);
@@ -2257,14 +2381,14 @@ int AssignmentAPI()
 
 	for (int k = 1; k <= number_of_links; k++)
 	{
-		MainVolume[k] = Link[k].Base_volume;  // assign the base volume  to main volume 
+		MainVolume[k] = Link[k].Base_demand_volume;  // assign the base volume  to main volume 
 	}
 
 	system_wide_travel_time = UpdateLinkCost(MainVolume);  // set up the cost first using FFTT
 
 	fprintf(link_performance_file,
-		"iteration_no,link_id,from_node_id,to_node_id,volume,ref_volume,base_volume,obs_volume,"
-		"capacity,D,doc,fftt,travel_time,VDF_alpha,VDF_beta,VDF_plf,speed_mph,speed_kmph,VMT,VHT,PMT,PHT,VHT_QVDF,PHT_QVDF,geometry,");
+		"iteration_no,link_id,from_node_id,to_node_id,volume,ref_volume,base_demand_volume,obs_volume,background_volume,"
+		"capacity,D,doc,vdf_fftt,travel_time,vdf_alpha,vdf_beta,vdf_plf,speed_mph,speed_kmph,VMT,VHT,PMT,PHT,VHT_QVDF,PHT_QVDF,geometry,");
 
 	fprintf(logfile, "iteration_no,link_id,from_node_id,to_node_id,volume,ref_volume,obs_volume,capacity,doc,fftt,travel_time,delay,");
 
@@ -2317,9 +2441,9 @@ int AssignmentAPI()
 	{
 		for (int k = 1; k <= number_of_links; k++)
 		{
-			fprintf(logfile, "%d,%d,%d,%d,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,",
+			fprintf(logfile, "%d,%d,%d,%d,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,",
 				iteration_no, k, Link[k].external_from_node_id, Link[k].external_to_node_id,
-				MainVolume[k], Link[k].Ref_volume, Link[k].Obs_volume, Link[k].Link_Capacity,
+				MainVolume[k], Link[k].Ref_volume, Link[k].Obs_volume, Link[k].background_volume, Link[k].Link_Capacity,
 				MainVolume[k] / fmax(0.01, Link[k].Link_Capacity), Link[k].FreeTravelTime,
 				Link[k].Travel_time, Link[k].Travel_time - Link[k].FreeTravelTime);
 
@@ -2474,6 +2598,8 @@ int AssignmentAPI()
 			OutputVehicleDetails("vehicle.csv", m_theta);
 	}
 
+	// output link_performance.csv
+
 	for (int k = 1; k <= number_of_links; k++)
 	{
 
@@ -2515,7 +2641,7 @@ int AssignmentAPI()
 
 		fprintf(link_performance_file, "%d,%d,%d,%d,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,%.4lf,",
 			iteration_no, Link[k].link_id, Link[k].external_from_node_id, Link[k].external_to_node_id,
-			MainVolume[k], Link[k].Ref_volume, Link[k].Base_volume, Link[k].Obs_volume, Link[k].Link_Capacity, IncomingDemand, DOC, Link[k].FreeTravelTime,
+			MainVolume[k], Link[k].Ref_volume, Link[k].Base_demand_volume, Link[k].Obs_volume, Link[k].Link_Capacity, IncomingDemand, DOC, Link[k].FreeTravelTime,
 			Link[k].Travel_time, Link[k].VDF_Alpha, Link[k].VDF_Beta, Link[k].VDF_plf, Link[k].length / fmax(Link[k].Travel_time / 60.0, 0.001), Link[k].length / fmax(Link[k].Travel_time / 60.0, 0.001) * 1.609, Link[k].Travel_time - Link[k].FreeTravelTime);
 
 		fprintf(link_performance_file, "%2lf,%2lf,%2lf,%2lf,%2lf,%2lf,", VMT, VHT, PMT, PHT, VHT_QVDF, PHT_QVDF);
@@ -2569,11 +2695,11 @@ static void Init(int int_number_of_modes, int input_no_zones)
 		for (int k = 1; k <= number_of_links; k++)
 		{
 
-			Link[k].Base_volume = 0;
+			Link[k].Base_demand_volume = 0;
 
 			for (int m = 1; m <= int_number_of_modes; m++)
 			{
-				Link[k].mode_Base_Volume[m] = 0;
+				Link[k].mode_Base_demand_volume[m] = 0;
 			}
 		}
 	}
@@ -2637,8 +2763,16 @@ void ReadLinks()
 			if (g_metric_system_flag == 1)
 				free_speed = free_speed / 1.609;
 
-			if (lanes <= 0 || capacity < 0.0001 || free_speed < 0.0001)
-				continue; 
+			parser_link.GetValueByFieldName("vdf_free_speed_mph", free_speed);
+
+			if (lanes <= 0 || capacity < 0.0001 || free_speed < 0.0001) {
+				std::cerr << "Error: Invalid link attributes detected. "
+					<< "lanes = " << lanes
+					<< ", capacity = " << capacity
+					<< ", free_speed = " << free_speed
+					<< ". Skipping this link." << std::endl;
+				continue;
+			}
 
 
 			Link[k].setup(number_of_modes);
@@ -2691,10 +2825,8 @@ void ReadLinks()
 			g_node_vector[Link[k].internal_to_node_id].m_incoming_link_seq_no_vector.push_back(k);
 			g_node_vector[Link[k].internal_from_node_id].m_outgoing_link_seq_no_vector.push_back(k);
 
-			parser_link.GetValueByFieldName("length", Link[k].length);
+			parser_link.GetValueByFieldName("vdf_length_mi", Link[k].length);
 
-			if (g_metric_system_flag == 1)
-				Link[k].length = Link[k].length / 1609;
 
 			parser_link.GetValueByFieldName("ref_volume", Link[k].Ref_volume);
 
@@ -2706,16 +2838,16 @@ void ReadLinks()
 			if (g_base_demand_mode == 1)
 			{
 
-				parser_link.GetValueByFieldName("base_volume", Link[k].Base_volume);
-				total_base_link_volume += Link[k].Base_volume;
+				parser_link.GetValueByFieldName("base_demand_volume", Link[k].Base_demand_volume);
+				total_base_link_volume += Link[k].Base_demand_volume;
 
 				if (number_of_modes == 1)  // single mode 
-					Link[k].mode_Base_Volume[1] = Link[k].Base_volume;
+					Link[k].mode_Base_demand_volume[1] = Link[k].Base_demand_volume;
 
 				for (int m = 1; m <= number_of_modes; m++)
 				{
 					std::string field_name = "base_vol_" + std::string(g_mode_type_vector[m].mode_type);
-					parser_link.GetValueByFieldName(field_name.c_str(), Link[k].mode_Base_Volume[m]);
+					parser_link.GetValueByFieldName(field_name.c_str(), Link[k].mode_Base_demand_volume[m]);
 
 				}
 			}
@@ -2773,9 +2905,11 @@ void ReadLinks()
 
 			Link[k].FreeTravelTime = Link[k].length / free_speed * 60.0;
 
-			parser_link.GetValueByFieldName("VDF_alpha", Link[k].VDF_Alpha);
-			parser_link.GetValueByFieldName("VDF_beta", Link[k].VDF_Beta);
-			parser_link.GetValueByFieldName("VDF_plf", Link[k].VDF_plf);
+			parser_link.GetValueByFieldName("vdf_fftt", Link[k].FreeTravelTime,true);
+
+			parser_link.GetValueByFieldName("vdf_alpha", Link[k].VDF_Alpha, true);
+			parser_link.GetValueByFieldName("vdf_beta", Link[k].VDF_Beta, true);
+			parser_link.GetValueByFieldName("vdf_plf", Link[k].VDF_plf, true);
 
 
 			for (int m = 1; m <= number_of_modes; m++)
@@ -2795,10 +2929,10 @@ void ReadLinks()
 				Link[k].BoverC = 0;
 
 
-			parser_link.GetValueByFieldName("VDF_cp", Link[k].Q_cp);
-			parser_link.GetValueByFieldName("VDF_cd", Link[k].Q_cd);
-			parser_link.GetValueByFieldName("VDF_n", Link[k].Q_n);
-			parser_link.GetValueByFieldName("VDF_s", Link[k].Q_s);
+			parser_link.GetValueByFieldName("vdf_cp", Link[k].Q_cp);
+			parser_link.GetValueByFieldName("vdf_cd", Link[k].Q_cd);
+			parser_link.GetValueByFieldName("vdf_n", Link[k].Q_n);
+			parser_link.GetValueByFieldName("vdf_s", Link[k].Q_s);
 
 			Link[k].free_speed = free_speed;
 			Link[k].Cutoff_Speed = free_speed * 0.75;  // use 0.75 as default ratio, when free_speed = 70 mph, Cutoff_Speed = 52.8 mph in I-10 data set
@@ -3114,9 +3248,13 @@ int Read_ODtable(double*** ODtable, double*** DiffODtable, double*** target_ODta
 
 			if (file == NULL)
 			{
+
+				g_ODME_target_od = -1; 
 				// by default, we can skip this requirement, but if we load baseline link volume we should have base OD demand for consistency 
 				break;
 			}
+
+			g_ODME_target_od = 1;
 
 			int o_zone_id, d_zone_id;
 			double volume;
@@ -4467,18 +4605,666 @@ int SimulationAPI()
 	return 0;
 }
 
-//int main()
-//{
-//	AssignmentAPI();
-//	//SimulationAPI();
-//}
+
+//// map_matching.cpp
+//#include <cmath>
+//#include <algorithm>
+//#include <vector>
+//#include <map>
+//#include <string>
+//#include <iostream>
+//#include <cstdio>
+//#include <cstdlib>
+
+namespace MapMatching {
+
+	// Constants
+	constexpr double PI = 3.141592653589793;
+	constexpr double EARTH_RADIUS = 6371000; // in meters
+	constexpr double DEFAULT_GRID_RESOLUTION = 0.01; // adjust as needed
+
+	// ---------------------------------------------------------
+	// Geometry Utilities
+	// ---------------------------------------------------------
+	inline double toRadians(double degrees) {
+		return degrees * PI / 180.0;
+	}
+
+	// Haversine distance (meters) given two lat/lon pairs.
+	double haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+		lat1 = toRadians(lat1); lon1 = toRadians(lon1);
+		lat2 = toRadians(lat2); lon2 = toRadians(lon2);
+		double dlat = lat2 - lat1;
+		double dlon = lon2 - lon1;
+		double a = std::pow(std::sin(dlat / 2), 2) +
+			std::cos(lat1) * std::cos(lat2) * std::pow(std::sin(dlon / 2), 2);
+		double c = 2 * std::atan2(std::sqrt(a), std::sqrt(1 - a));
+		return EARTH_RADIUS * c;
+	}
+
+	// A simple point structure.
+	struct GDPoint {
+		double x, y;
+	};
+
+	// Euclidean (L2) distance between two points.
+	inline double getEuclideanDistance(const GDPoint* p1, const GDPoint* p2) {
+		return std::sqrt(std::pow(p1->x - p2->x, 2) + std::pow(p1->y - p2->y, 2));
+	}
+
+	// Compute distance from a point to a line segment [fromPt, toPt].
+	double getPointToLineDistance(const GDPoint* pt,
+		const GDPoint* fromPt,
+		const GDPoint* toPt,
+		double unitGridRes,
+		bool no_intersection_requirement)
+	{
+		double lineLength = getEuclideanDistance(fromPt, toPt);
+		if (lineLength < 1e-6)
+			return getEuclideanDistance(pt, fromPt);
+		double U = ((pt->x - toPt->x) * (fromPt->x - toPt->x) +
+			(pt->y - toPt->y) * (fromPt->y - toPt->y))
+			/ (lineLength * lineLength);
+		if (!no_intersection_requirement && (U < 0.0 || U > 1.0))
+			return unitGridRes; // fallback value
+		GDPoint intersection;
+		intersection.x = toPt->x + U * (fromPt->x - toPt->x);
+		intersection.y = toPt->y + U * (fromPt->y - toPt->y);
+		double d1 = getEuclideanDistance(pt, &intersection);
+		double d0 = getEuclideanDistance(pt, fromPt);
+		double d2 = getEuclideanDistance(pt, toPt);
+		return no_intersection_requirement ? std::min({ d1, d0, d2 }) : d1;
+	}
+
+	// ---------------------------------------------------------
+	// Data Structures for MMLinks and GPS Points.
+	// ---------------------------------------------------------
+	// A link (named MMLink) is defined by its two endpoints.
+	struct MMLink {
+		GDPoint fromPt;
+		GDPoint toPt;
+		int external_from_node_id;
+		int external_to_node_id;
 
 
-void DTA_AssignmentAPI() {
-	AssignmentAPI();
+		double link_distance; // precomputed total length
+		bool bInsideFlag;     // true if the link is within a grid cell with GPS points
+		double likelihood_distance; // computed matching cost
+		int likely_trace_no;        // matching GPS trace id
+		int hit_count;              // count of “hits” from intersection tests
+		MMLink(const GDPoint& f, const GDPoint& t, const int& from_node_id, const int& to_node_id)
+			: fromPt(f), toPt(t), external_from_node_id(from_node_id), external_to_node_id(to_node_id),
+			link_distance(getEuclideanDistance(&f, &t)),
+			bInsideFlag(false),
+			likelihood_distance(1e9),
+			likely_trace_no(-1),
+			hit_count(0) {}
+	};
+
+	// A GPS trace point.
+	struct GPSPoint {
+		GDPoint pt;
+		int trace_no;
+		int global_time;   // in seconds
+		GPSPoint() : trace_no(0), global_time(0) {}
+	};
+
+	// ---------------------------------------------------------
+	// Grid Cell for Matching.
+	// ---------------------------------------------------------
+	struct GridCell {
+		double x, y;  // cell origin (e.g., lower-left)
+		std::vector<int> linkIndices; // indices of MMLinks overlapping this cell
+		std::vector<int> OriginZoneNodeIndices; // indices of MMLinks overlapping this cell
+		std::vector<int> DestinationZoneNodeIndices; // indices of MMLinks overlapping this cell
+		std::vector<GPSPoint> gpsPoints; // GPS points falling in this cell
+		bool dwell_flag = false;
+		float start_min = 1e9; // earliest GPS time (minutes) in cell
+		float end_min = 0;     // latest GPS time (minutes)
+		float dwell_time = 0;  // computed dwell time (minutes)
+	};
+
+	// ---------------------------------------------------------
+	// MatchingGrid: builds a grid for MMLinks, marks visited cells from GPS traces,
+	// and processes each cell to compute a matching cost.
+	// ---------------------------------------------------------
+	class MatchingGrid {
+
+
+	public:
+
+		int m_FirstThruNode;
+
+		MatchingGrid(double left, double right, double bottom, double top, double gridRes = DEFAULT_GRID_RESOLUTION, int first_through_node_no = 0)
+			: left_(left), right_(right), bottom_(bottom), top_(top), gridRes_(gridRes), m_FirstThruNode(first_through_node_no)
+		{
+			cols_ = static_cast<int>(std::ceil((right_ - left_) / gridRes_)) + 1;
+			rows_ = static_cast<int>(std::ceil((top_ - bottom_) / gridRes_)) + 1;
+			grid_.resize(rows_, std::vector<GridCell>(cols_));
+			for (int r = 0; r < rows_; ++r)
+				for (int c = 0; c < cols_; ++c) {
+					grid_[r][c].x = left_ + c * gridRes_;
+					grid_[r][c].y = bottom_ + r * gridRes_;
+				}
+		}
+
+		// Add this method to retrieve a grid cell by (x, y)
+		const GridCell* getCell(double x, double y) const {
+			int c = static_cast<int>((x - left_) / gridRes_);
+			int r = static_cast<int>((y - bottom_) / gridRes_);
+			if (r >= 0 && r < rows_ && c >= 0 && c < cols_)
+				return &grid_[r][c];
+			return nullptr;
+		}
+
+		// Insert a MMLink into every cell overlapping its bounding box.
+		void insertLink(int linkIndex, const GDPoint& fromPt, const GDPoint& toPt, int internal_from_node_id, int internal_to_node_id) {
+			double minX = std::min(fromPt.x, toPt.x);
+			double maxX = std::max(fromPt.x, toPt.x);
+			double minY = std::min(fromPt.y, toPt.y);
+			double maxY = std::max(fromPt.y, toPt.y);
+			int colStart = getColIndex(minX);
+			int colEnd = getColIndex(maxX);
+			int rowStart = getRowIndex(minY);
+			int rowEnd = getRowIndex(maxY);
+			for (int r = rowStart; r <= rowEnd; ++r)
+				for (int c = colStart; c <= colEnd; ++c)
+					if (isValidCell(r, c))
+					{
+						grid_[r][c].linkIndices.push_back(linkIndex);
+
+						if(internal_from_node_id< m_FirstThruNode)  // connector, internal_from_node_id is the TAZ centroid 
+							grid_[r][c].OriginZoneNodeIndices.push_back(internal_from_node_id);
+						if (internal_to_node_id < m_FirstThruNode)  // connector, internal_to_node_id is the TAZ centroid 
+							grid_[r][c].DestinationZoneNodeIndices.push_back(internal_to_node_id);
+					}
+		}
+
+		// Insert a GPS point and update the cell's time bounds.
+		void insertGPSPoint(const GPSPoint& gps, const GDPoint& pt) {
+			int r = getRowIndex(pt.y);
+			int c = getColIndex(pt.x);
+			if (isValidCell(r, c)) {
+				grid_[r][c].gpsPoints.push_back(gps);
+				float timeMin = gps.global_time / 60.0f;
+				grid_[r][c].start_min = std::min(grid_[r][c].start_min, timeMin);
+				grid_[r][c].end_min = std::max(grid_[r][c].end_min, timeMin);
+			}
+		}
+
+		// Insert a GPS point and update the cell's time bounds.
+		void cleanGPSPoint() {
+			for (int r = 0; r < rows_; ++r) {
+				for (int c = 0; c < cols_; ++c) {
+					grid_[r][c].gpsPoints.clear();
+				}
+			}
+		}
+		// Process visited cells:
+		// 1) Mark dwell cells (if time span > 120 minutes).
+		// 2) For each link in a cell, loop over GPS points and update a matching cost.
+		// 3) For links with no matching GPS point, assign the closest one.
+		void processCells(const std::vector<MMLink>& links,
+			std::vector<double>& linkGeneralCost,
+			std::vector<int>& linkMatchingTraceNo,
+			double nonHitDistanceRatio = 10.0)
+		{
+			// First pass: mark dwell cells.
+			for (int r = 0; r < rows_; ++r) {
+				for (int c = 0; c < cols_; ++c) {
+					GridCell& cell = grid_[r][c];
+					if (!cell.gpsPoints.empty() && (cell.end_min - cell.start_min > 120)) {
+						cell.dwell_flag = true;
+						cell.dwell_time = cell.end_min - cell.start_min;
+					}
+				}
+			}
+			// Second pass: update link cost from GPS points.
+			for (int r = 0; r < rows_; ++r) {
+				for (int c = 0; c < cols_; ++c) {
+					GridCell& cell = grid_[r][c];
+					if (!cell.gpsPoints.empty() && !cell.linkIndices.empty()) {
+						// Initialize each link’s cost to the grid resolution.
+						for (int linkIdx : cell.linkIndices)
+							linkGeneralCost[linkIdx] = gridRes_;
+						// For each GPS point…
+						for (const auto& gps : cell.gpsPoints) {
+							for (int linkIdx : cell.linkIndices) {
+								const MMLink& L = links[linkIdx];
+								double d = getPointToLineDistance(&gps.pt, &L.fromPt, &L.toPt, 1.0, true);
+								double cost = d; // Here, you might combine with other measures.
+								if (cost < linkGeneralCost[linkIdx]) {
+									linkGeneralCost[linkIdx] = cost;
+									linkMatchingTraceNo[linkIdx] = gps.trace_no;
+								}
+							}
+						}
+						// Stage 2: for links with no matching GPS point, find the closest one.
+						for (int linkIdx : cell.linkIndices) {
+							if (linkMatchingTraceNo[linkIdx] < 0) {
+								double min_d = 1e9;
+								int bestTrace = -1;
+								for (const auto& gps : cell.gpsPoints) {
+									double d = getPointToLineDistance(&gps.pt, &links[linkIdx].fromPt, &links[linkIdx].toPt, 1.0, false);
+									if (d < min_d) { min_d = d; bestTrace = gps.trace_no; }
+								}
+								linkMatchingTraceNo[linkIdx] = bestTrace;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		void printSummary() const {
+			std::cout << "MatchingGrid: " << rows_ << " rows x " << cols_ << " cols, resolution "
+				<< gridRes_ << "\n";
+			std::cout << "Bounds: x[" << left_ << ", " << right_ << "], y[" << bottom_ << ", " << top_ << "]\n";
+		}
+
+	private:
+		int getColIndex(double x) const { return static_cast<int>((x - left_) / gridRes_); }
+		int getRowIndex(double y) const { return static_cast<int>((y - bottom_) / gridRes_); }
+		bool isValidCell(int r, int c) const { return r >= 0 && r < rows_ && c >= 0 && c < cols_; }
+		double left_, right_, bottom_, top_, gridRes_;
+		int rows_, cols_;
+		std::vector<std::vector<GridCell>> grid_;
+	};
+
+	// Define a structure to hold trace record information.
+	struct TraceRecord {
+		int trace_no = 0;
+		std::string trace_id = "";
+		std::string allowed_link_type_code = "";
+		std::string blocked_link_type_code = "";
+		double y_coord = 0.0;
+		double x_coord = 0.0;
+		int road_order = 0;
+		double reference_speed = 0.0;
+		std::string agent_id = "";
+		int internal_road_order = 0;
+		int o_node_id = -1;
+		int d_node_id = -1;
+	};
+
+	// Here we change the parameter to a nested map:
+	// Outer key: agent_id (std::string)
+	// Inner key: trace_no (int)
+	// Value: vector of GPSPoints that belong to that trace.
+	int readGPSTraceFile(std::unordered_map<std::string, std::vector<GPSPoint>>& gpsTraces)
+
+	{
+		CDTACSVParser parser_trace;
+		std::vector<TraceRecord> traceRecords;
+
+		// Open the CSV file (the second parameter 'true' indicates that the file contains headers)
+		if (parser_trace.OpenCSVFile("trace.csv", true))
+		{
+			// Read each record until end-of-file.
+			while (parser_trace.ReadRecord())
+			{
+				TraceRecord rec;
+				// Read the fields by name.
+				parser_trace.GetValueByFieldName("trace_no", rec.trace_no);
+				parser_trace.GetValueByFieldName("trace_id", rec.trace_id);
+				parser_trace.GetValueByFieldName("allowed_link_type_code", rec.allowed_link_type_code);
+				parser_trace.GetValueByFieldName("blocked_link_type_code", rec.blocked_link_type_code);
+				parser_trace.GetValueByFieldName("y_coord", rec.y_coord);
+				parser_trace.GetValueByFieldName("x_coord", rec.x_coord);
+				parser_trace.GetValueByFieldName("road_order", rec.road_order);
+				parser_trace.GetValueByFieldName("reference_speed", rec.reference_speed);
+				parser_trace.GetValueByFieldName("agent_id", rec.agent_id);
+				parser_trace.GetValueByFieldName("internal_road_order", rec.internal_road_order);
+				parser_trace.GetValueByFieldName("o_node_id", rec.o_node_id);
+				parser_trace.GetValueByFieldName("d_node_id", rec.d_node_id);
+
+				traceRecords.push_back(rec);
+			}
+			parser_trace.CloseCSVFile();
+		}
+		else
+		{
+			std::cerr << "Error: Cannot open trace.csv" << std::endl;
+			std::exit(1);
+		}
+
+		// Group the GPS traces by agent_id and trace_no
+		for (const auto& rec : traceRecords)
+		{
+			GPSPoint gps;
+			gps.pt.x = rec.x_coord;
+			gps.pt.y = rec.y_coord;
+			gps.trace_no = rec.trace_no;
+			// If you have a global_time field in your CSV, you can set gps.global_time here.
+
+			// Group by agent_id then trace_no:
+			gpsTraces[rec.agent_id].push_back(gps);
+		}
+
+		return 0;
+	}
+
+
+	// Helper: Compute Euclidean distance between two points.
+	inline double computeEuclideanDistance(const GDPoint& a, const GDPoint& b) {
+		return std::sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+	}
+
+	// Given a set of candidate zone node IDs (from a grid cell) and a point,
+	// return the candidate whose coordinate is closest.
+	// zoneNodeCoords: a mapping from zone node id to its coordinate.
+	int determineZoneNode(const std::vector<int>& candidateNodeIds, const GDPoint& avgPt,
+		const std::map<int, GDPoint>& zoneNodeCoords)
+	{
+		double minDist = std::numeric_limits<double>::max();
+		int bestNode = -1;
+		for (int nodeId : candidateNodeIds) {
+			auto it = zoneNodeCoords.find(nodeId);
+			if (it != zoneNodeCoords.end()) {
+				double d = computeEuclideanDistance(avgPt, it->second);
+				if (d < minDist) {
+					minDist = d;
+					bestNode = nodeId;
+				}
+			}
+		}
+		return bestNode;
+	}
+
+	// This function uses the first few and last few GPS points of a trace
+	// to determine the origin and destination zone node IDs.
+	// Parameters:
+	// - trace: vector of GPSPoint representing a single trace.
+	// - grid: the MatchingGrid that contains the grid cells.
+	// - zoneNodeCoords: mapping from zone node id to its GDPoint (x,y) coordinate.
+	// - numPointsToAverage: number of points from the start/end to average.
+	// - originNodeId & destinationNodeId: outputs.
+	void determineOriginDestinationNodes(const std::vector<GPSPoint>& trace,
+		const MatchingGrid& grid,
+		const std::map<int, GDPoint>& zoneNodeCoords,
+		int numPointsToAverage,
+		int& originNodeId,
+		int& destinationNodeId)
+	{
+		if (trace.empty()) {
+			originNodeId = -1;
+			destinationNodeId = -1;
+			return;
+		}
+
+		// Average first numPointsToAverage GPS points for the origin.
+		GDPoint avgOrigin = { 0, 0 };
+		int countOrigin = std::min(numPointsToAverage, static_cast<int>(trace.size()));
+		for (int i = 0; i < countOrigin; ++i) {
+			avgOrigin.x += trace[i].pt.x;
+			avgOrigin.y += trace[i].pt.y;
+		}
+		avgOrigin.x /= countOrigin;
+		avgOrigin.y /= countOrigin;
+
+		// Average last numPointsToAverage GPS points for the destination.
+		GDPoint avgDest = { 0, 0 };
+		int countDest = std::min(numPointsToAverage, static_cast<int>(trace.size()));
+		for (int i = static_cast<int>(trace.size()) - countDest; i < static_cast<int>(trace.size()); ++i) {
+			avgDest.x += trace[i].pt.x;
+			avgDest.y += trace[i].pt.y;
+		}
+		avgDest.x /= countDest;
+		avgDest.y /= countDest;
+
+		// Retrieve the grid cell for the averaged origin and destination.
+		const GridCell* originCell = grid.getCell(avgOrigin.x, avgOrigin.y);
+		const GridCell* destCell = grid.getCell(avgDest.x, avgDest.y);
+
+		// Determine the best matching zone node from the candidates in each cell.
+		if (originCell && !originCell->OriginZoneNodeIndices.empty())
+			originNodeId = determineZoneNode(originCell->OriginZoneNodeIndices, avgOrigin, zoneNodeCoords);
+		else
+			originNodeId = -1;
+
+		if (destCell && !destCell->DestinationZoneNodeIndices.empty())
+			destinationNodeId = determineZoneNode(destCell->DestinationZoneNodeIndices, avgDest, zoneNodeCoords);
+		else
+			destinationNodeId = -1;
+	}
+
+
+} // end namespace MapMatching
+
+
+
+// -------------------------
+// -------------------------
+// Example main() demonstrating advanced grid-based matching using MMLink
+// -------------------------
+int mapmatchingAPI() {
+
+
+	fopen_s(&summary_log_file, "summary_log_file.txt", "w");
+	double* MainVolume, * SubVolume, * SDVolume, Lambda;
+	int*** MDMinPathPredLink;
+
+	read_settings_file();
+	read_mode_type_file();
+	fopen_s(&logfile, "TAP_log.csv", "w");  // Open the log file for writing.
+	no_nodes = get_number_of_nodes_from_node_file(no_zones, FirstThruNode);
+	number_of_links = get_number_of_links_from_link_file();
+
+	printf("# of nodes= %d, largest zone id = %d, First Through Node (Seq No) = %d, number of links = %d\n", no_nodes, no_zones,
+		FirstThruNode, number_of_links);
+
+	fprintf(summary_log_file, "no_nodes= %d, no_zones = %d, FirstThruNode (seq No) = %d, number_of_links = %d\n", no_nodes, no_zones,
+		FirstThruNode, number_of_links);
+
+
+	double system_wide_travel_time = 0;
+	double system_least_travel_time = 0;
+
+	//fprintf(logfile,
+	//    "iteration_no,link_id,internal_from_node_id,internal_to_node_id,volume,capacity,voc,"
+	//    "fftt,travel_time,delay\n");
+
+
+
+	//Init(number_of_modes, no_zones);
+
+	InitLinks();
+
+	MDMinPathPredLink = (int***)Alloc_3D(number_of_modes, no_zones, no_nodes, sizeof(int)); 
+
+	double** CostTo;
+
+	CostTo = (double**)Alloc_2D(no_zones, no_nodes, sizeof(double));
+	using namespace MapMatching;
+
+	// Create some MMLinks.
+	std::vector<MMLink> mmLinks;
+
+	for (int k = 1; k <= number_of_links; k++)
+	{
+		double from_x, from_y, to_x, to_y; 
+		from_x = g_node_vector[Link[k].internal_from_node_id].x;
+		from_y = g_node_vector[Link[k].internal_to_node_id].y;
+		to_x = g_node_vector[Link[k].internal_from_node_id].x;
+		to_y = g_node_vector[Link[k].internal_to_node_id].y;
+
+		mmLinks.push_back(MMLink({ from_x, from_y }, { to_x, to_y}, Link[k].internal_from_node_id, Link[k].internal_to_node_id));
+	}
+
+
+
+	// Compute overall boundaries from all MMLink endpoints.
+	double left = 1e9, right = -1e9, bottom = 1e9, top = -1e9;
+	for (const auto& L : mmLinks) {
+		left = std::min({ left, L.fromPt.x, L.toPt.x });
+		right = std::max({ right, L.fromPt.x, L.toPt.x });
+		bottom = std::min({ bottom, L.fromPt.y, L.toPt.y });
+		top = std::max({ top, L.fromPt.y, L.toPt.y });
+	}
+
+	// Build the matching grid.
+	MatchingGrid mGrid(left, right, bottom, top, DEFAULT_GRID_RESOLUTION, FirstThruNode);
+	mGrid.printSummary();
+	for (size_t i = 0; i < mmLinks.size(); i++) {
+		mGrid.insertLink(static_cast<int>(i), mmLinks[i].fromPt, mmLinks[i].toPt, mmLinks[i].external_from_node_id, mmLinks[i].external_to_node_id);
+	}
+	std::unordered_map<std::string, std::vector<GPSPoint>> gpsTraces; 
+	std::unordered_map<std::string, int > gpsTraces_originNodeId;
+	std::unordered_map<std::string, int > gpsTraces_destinationNodeId;
+	std::unordered_map<std::string, int > gpsTraces_RouteId;
+	readGPSTraceFile(gpsTraces);
+
+	std::map<int, GDPoint> zoneNodeCoords;
+
+	for (int i = 0; i < FirstThruNode; i++)  // TAZ centriod only 
+	{
+		GDPoint pt;
+		pt.x = g_node_vector[i].x;
+		pt.y = g_node_vector[i].y;
+		zoneNodeCoords[g_node_vector[i].node_id] = pt;
+	}
+
+	std::vector<std::vector<std::vector<int>>> ODRouteIndices(
+		no_zones + 1,
+		std::vector<std::vector<int>>(no_zones + 1)
+	);
+	// ------------------------
+	// Insert GPS points into the grid.
+	// ------------------------
+	// Loop over each agent  for that agent.
+	int 	max_route_size = 1;
+
+	for (const auto& agentPair : gpsTraces) {
+
+		mGrid.cleanGPSPoint(); 
+		const std::string& agentId = agentPair.first;
+
+		std::vector<GPSPoint> gpsPoints;
+		gpsPoints = agentPair.second;
+		// Optionally, you might want to print or log the agent and trace information:
+		// std::cout << "Processing agent " << agentId << ", trace " << traceNo << std::endl;
+		for (const auto& gps : gpsPoints) {
+			mGrid.insertGPSPoint(gps, gps.pt);
+		}
+
+		////#pragma omp parallel for
+//		int Orig = agentPair.second.;  // get origin zone id
+		int numPointsToAverage = 3;
+		int  originNodeId = 0;
+		int destinationNodeId = 0;
+
+		determineOriginDestinationNodes(gpsPoints,
+			mGrid,
+			zoneNodeCoords,
+			numPointsToAverage,
+			originNodeId,
+			destinationNodeId);
+		gpsTraces_originNodeId[agentId] = originNodeId;
+		gpsTraces_destinationNodeId[agentId] = destinationNodeId;
+		gpsTraces_RouteId[agentId] = ODRouteIndices[originNodeId][destinationNodeId].size();
+		ODRouteIndices[originNodeId][destinationNodeId].push_back(1); 
+
+		if (ODRouteIndices[originNodeId][destinationNodeId].size() > max_route_size)
+			max_route_size = ODRouteIndices[originNodeId][destinationNodeId].size(); 
+
+	}
+
+	InitializeLinkIndices(number_of_modes, no_zones, max_route_size);;
+
+
+	for (const auto& agentPair : gpsTraces) {
+
+		mGrid.cleanGPSPoint();
+		const std::string& agentId = agentPair.first;
+
+		std::vector<GPSPoint> gpsPoints;
+		gpsPoints = agentPair.second;
+		// Optionally, you might want to print or log the agent and trace information:
+		// std::cout << "Processing agent " << agentId << ", trace " << traceNo << std::endl;
+		for (const auto& gps : gpsPoints) {
+			mGrid.insertGPSPoint(gps, gps.pt);
+		}
+		// ------------------------
+		// Prepare arrays for each MMLink’s cost and matching trace number.
+		// ------------------------
+		std::vector<double> linkGeneralCost(mmLinks.size(), DEFAULT_GRID_RESOLUTION);
+		std::vector<int>    linkMatchingTraceNo(mmLinks.size(), -1);
+
+		// Process the grid cells.
+		mGrid.processCells(mmLinks, linkGeneralCost, linkMatchingTraceNo);
+
+		// Print the matching cost for each MMLink.
+		for (size_t i = 0; i < mmLinks.size(); ++i) {
+			std::printf("MMLink %zu: cost = %.3f, matched trace = %d\n",
+				i, linkGeneralCost[i], linkMatchingTraceNo[i]);
+		}
+
+
+		if (gpsTraces_originNodeId[agentId] >= 1 && gpsTraces_destinationNodeId[agentId] >= 1)
+		{
+			int Orig = gpsTraces_originNodeId[agentId];
+			int Dest = gpsTraces_destinationNodeId[agentId];
+			std::vector<int> currentLinkSequence; // Temporary vector to store link indices
+
+
+			int m = 1;
+			Minpath(m, Orig, MDMinPathPredLink[m][Orig], CostTo[Orig]);
+			int CurrentNode = g_map_external_node_id_2_node_seq_no[Dest];
+
+			// MinPathPredLink is coded as internal node id 
+			// 
+			//double total_travel_time = 0;
+			//double total_length = 0;
+			//double total_FFTT = 0;
+			// back trace 
+			while (CurrentNode != Orig)
+			{
+				int k = MDMinPathPredLink[m][Orig][CurrentNode];
+
+				if (k <= 0 || k > number_of_links || k == INVALID)
+				{
+					printf("A problem in All_or_Nothing_Assign() Invalid pred for node seq no %d Orig zone= %d \n\n", CurrentNode, Orig);
+					break;
+				}
+				CurrentNode = Link[k].internal_from_node_id;
+
+				if (CurrentNode <= 0 || CurrentNode > no_nodes)
+				{
+					printf("A problem in All_or_Nothing_Assign() Invalid node seq no %d Orig zone = %d \n\n", CurrentNode, Orig);
+					break;
+				}
+
+				currentLinkSequence.push_back(k); // Store the link index
+			}
+
+			int route_id = gpsTraces_RouteId[agentId];
+			AddLinkSequence(m, Orig, Dest, route_id, currentLinkSequence);
+
+		}
+
+	}
+				std::vector<double> m_theta; 
+
+
+				OutputRouteDetails("route_assignment.csv", m_theta);
+	
+	Free_3D((void***)MDMinPathPredLink, number_of_modes, no_zones, no_nodes); 
+	Free_2D((void**)CostTo, no_zones, no_nodes);
+	return 0;
 }
 
+int main()
+{
+	//mapmatchingAPI();
+	//
+	AssignmentAPI();
+	//SimulationAPI();
+}
+
+void DTA_AssignmentAPI() {
+	main();
+}
 
 void DTA_SimulationAPI() {
-	SimulationAPI();
+	main();
 }

@@ -5,8 +5,8 @@ project(DTALite VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_BUILD_TYPE Release)
-add_library(DTALite SHARED src/TAPLite.cpp)
-# add_executable(DTALite SHARED src/TAPLite.cpp)
+# add_library(DTALite SHARED src/TAPLite.cpp)
+add_executable(DTALite SHARED src/TAPLite.cpp)
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
