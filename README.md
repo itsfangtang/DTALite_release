@@ -77,9 +77,9 @@ Tang, F., Zheng, H., and Zhou, X. (2025, Jan 29). *DTALite*. Retrieved from http
 
 ## Please Contribute
 
-Any contributions are welcomed including advise new applications of DTALite, enhance documentation and [docstrings](https://docs.python-guide.org/writing/documentation/#writing-docstrings) in the source code, refactor and/or optimize the source code, report and/or resolve potential issues/bugs, suggest and/or add new functionalities, etc.
+Welcome to join the [DTALite Google Group](https://groups.google.com/g/dtalite)! Any contributions are welcomed including advise new applications of DTALite, enhance documentation and [docstrings](https://docs.python-guide.org/writing/documentation/#writing-docstrings) in the source code, refactor and/or optimize the source code, report and/or resolve potential issues/bugs, suggest and/or add new functionalities, etc.
 
-Path4GMNS has a very simple workflow setup, i.e., **master for release (on both GitHub and PyPI)** and **dev for development**. If you would like to work directly on the source code (and probably the documentation), please make sure that **the destination branch of your pull request is dev**, i.e., all potential changes/updates shall go to the dev branch before merging into master for release.
+DTALite has a very simple workflow setup, i.e., **main branch for release (on both GitHub and PyPI)** and **dev for development**. If you would like to work directly on the source code (and probably the documentation), please make sure that **the destination branch of your pull request is dev**, i.e., all potential changes/updates shall go to the dev branch before merging into master for release.
 
 
 ## References
