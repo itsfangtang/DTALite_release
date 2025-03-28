@@ -23,10 +23,11 @@ extern "C" PATH_ENGINE_API void DTA_SimulationAPI();
 static int MinLineSearchIterations = 5;
 static int ActualIterations = 0;
 static double LastLambda = 1.0;
+int g_accessibility_only_mode = 0;
 
 std::map<int, int> g_map_external_node_id_2_node_seq_no;
 std::map<int, int> g_map_node_seq_no_2_external_node_id;
-
+std::map<int, int> g_map_internal_zone_no_2_node_seq_no;
 class CDTACSVParser {
 public:
     char Delimiter;
@@ -100,49 +101,75 @@ void CDTACSVParser::ConvertLineStringValueToIntegers()
     }
 }
 
+// Trim in place
+static inline void TrimString(std::string& s)
+{
+    // Left trim
+    s.erase(
+        s.begin(),
+        std::find_if(s.begin(), s.end(), [](unsigned char ch) { return !std::isspace(ch); })
+    );
+
+    // Right trim
+    s.erase(
+        std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) { return !std::isspace(ch); }).base(),
+        s.end()
+    );
+}
+
 bool CDTACSVParser::OpenCSVFile(std::string fileName, bool b_required)
 {
     mFileName = fileName;
     inFile.open(fileName.c_str());
 
-    if (inFile.is_open())
+    if (!inFile.is_open())
     {
-        if (IsFirstLineHeader)
-        {
-            std::string s;
-            std::getline(inFile, s);
-            std::vector<std::string> FieldNames = ParseLine(s);
-
-            for (size_t i = 0; i < FieldNames.size(); i++)
-            {
-                std::string tmp_str = FieldNames.at(i);
-                size_t start = tmp_str.find_first_not_of(" ");
-
-                std::string name;
-                if (start == std::string::npos)
-                {
-                    name = "";
-                }
-                else
-                {
-                    name = tmp_str.substr(start);
-                    // TRACE("%s,", name.c_str());
-                }
-                FieldsIndices[name] = (int)i;
-            }
-        }
-        return true;
-    }
-    else
-    {
+        // If this CSV file is required and cannot be opened, handle error
         if (b_required)
         {
-            // g_program_stop();
+            // g_program_stop(); // or throw an exception, or however you prefer
         }
         return false;
     }
-}
 
+    // If the first line is a header row, read and parse it
+    if (IsFirstLineHeader)
+    {
+        std::string s;
+        if (!std::getline(inFile, s))
+        {
+            // File is open but no header line found
+            return false;
+        }
+
+        // -- Optional: Remove UTF-8 BOM if present --
+        static const unsigned char UTF8_BOM[3] = { 0xEF, 0xBB, 0xBF };
+        if (s.size() >= 3 &&
+            (unsigned char)s[0] == UTF8_BOM[0] &&
+            (unsigned char)s[1] == UTF8_BOM[1] &&
+            (unsigned char)s[2] == UTF8_BOM[2])
+        {
+            s.erase(0, 3);
+        }
+
+        // Parse the first line to get header fields
+        std::vector<std::string> FieldNames = ParseLine(s);
+
+        // Trim each header field and store in FieldsIndices map
+        for (size_t i = 0; i < FieldNames.size(); ++i)
+        {
+            std::string tmp_str = FieldNames[i];
+            TrimString(tmp_str);
+
+            // You might decide to do further normalization here, e.g. transform to lowercase
+            // std::transform(tmp_str.begin(), tmp_str.end(), tmp_str.begin(), ::tolower);
+
+            FieldsIndices[tmp_str] = static_cast<int>(i);
+        }
+    }
+
+    return true;
+}
 bool CDTACSVParser::ReadRecord()
 {
     LineFieldsValue.clear();
@@ -304,10 +331,8 @@ bool CDTACSVParser::GetValueByFieldName(std::string field_name,
     {
         if (required_field)
         {
-            // dtalog.output() << "[ERROR] Field " << field_name << " in file " << mFileName.c_str()
-            // << " does not exist. Please check the file." << '\n'; g_DTA_log_file << "[ERROR]
-            // Field " << field_name << " in file " << mFileName.c_str() << " does not exist. Please
-            // check the file." << '\n'; g_program_stop();
+            //cout << "[ERROR] Field " << field_name << " in file " << mFileName.c_str()
+            // << " does not exist. Please check the file." << '\n'; 
         }
         return false;
     }
