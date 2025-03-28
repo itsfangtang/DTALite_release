@@ -19,6 +19,8 @@ extern "C" PATH_ENGINE_API void DTA_SimulationAPI();
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 
 static int MinLineSearchIterations = 5;
 static int ActualIterations = 0;
