@@ -2,14 +2,16 @@ name: Build Linux
 
 on:
   push:
-    branches: [dev]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
 jobs:
   build:
     name: Build Linux
-    runs-on: ubuntu-latest
+#    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+
     steps:
       - uses: actions/checkout@v3
 
