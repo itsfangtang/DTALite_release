@@ -20,9 +20,26 @@ __all__ = [
     'simulation'
 ]
 
+# current_os = platform.system()
+# if current_os == "Darwin":
+#     library_name = "DTALite_arm.dylib"
+# elif current_os == "Windows":
+#     library_name = "DTALite.dll"
+# elif current_os == "Linux":
+#     library_name = "DTALite.so"
+# else:
+#     raise OSError("Unsupported operating system")
+
+
 current_os = platform.system()
+arch = platform.machine()
 if current_os == "Darwin":
-    library_name = "DTALite_arm.dylib"
+    if arch == "arm64":
+        library_name = "DTALite_arm.dylib"
+    elif arch == "x86_64":
+        library_name = "DTALite_x86.dylib"
+    else:
+        raise OSError(f"Unsupported macOS architecture: {arch}")
 elif current_os == "Windows":
     library_name = "DTALite.dll"
 elif current_os == "Linux":
@@ -30,7 +47,8 @@ elif current_os == "Linux":
 else:
     raise OSError("Unsupported operating system")
 
-dtalib = ctypes.CDLL(os.path.join(os.path.dirname(__file__), library_name))
+
+dtalib = ctypes.CDLL(os.path.join(os.path.dirname(__file__), "bin", library_name))
 
 
 def assignment():
